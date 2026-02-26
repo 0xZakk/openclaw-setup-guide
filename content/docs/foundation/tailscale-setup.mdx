@@ -1,0 +1,103 @@
+---
+title: Tailscale VPN Setup
+description: Set up a secure network between your daily driver and your agent's machine
+---
+
+If you're running OpenClaw on a separate machine (Mac Mini, Linux server, Raspberry Pi), you need a way to connect to it securely from your daily driver. Tailscale is the easiest way to do this -- it creates a private VPN (called a "tailnet") between your devices using WireGuard under the hood. No port forwarding, no router config, just install and go.
+
+Once both machines are on your tailnet, you can SSH in, share screens, access dev servers, and manage OpenClaw -- even when you're on a completely different network (coffee shop, office, wherever).
+
+## Install Tailscale on Both Machines
+
+### On your daily driver (laptop/desktop)
+
+1. Download Tailscale from [tailscale.com/download](https://tailscale.com/download) or install via Homebrew:
+   ```bash
+   brew install tailscale
+   ```
+2. Open the app and sign in with your preferred identity provider (Google, GitHub, Apple, etc.)
+3. Your machine gets a stable Tailscale IP (like `100.x.x.x`) that never changes
+
+### On your agent's machine (Mac Mini, server, etc.)
+
+Same process:
+1. Install Tailscale (same method -- App Store, Homebrew, or standalone download)
+2. Sign in with the **same account**
+3. Note the Tailscale IP -- you'll use this for everything
+
+Both machines are now on the same private network, regardless of physical location.
+
+## Enable SSH Access
+
+On the Mac Mini (or whatever machine runs your agent):
+
+1. Go to **System Settings > General > Sharing**
+2. Turn on **Remote Login** (this enables SSH)
+3. Set it to allow access for your user account
+
+Now from your daily driver, SSH in using the Tailscale IP:
+
+```bash
+ssh your-username@100.x.x.x
+```
+
+To make this easier, create an SSH config entry on your daily driver:
+
+```bash
+# ~/.ssh/config
+Host macmini
+    HostName 100.x.x.x   # Tailscale IP of your Mac Mini
+    User your-username
+```
+
+Now you can just run `ssh macmini`.
+
+## Secure OpenClaw Behind Tailscale
+
+OpenClaw's gateway should stay bound to loopback (`127.0.0.1`) so it's not exposed on any network. If you need to access the gateway from your daily driver, use Tailscale Serve:
+
+```json
+{
+  "gateway": {
+    "bind": "loopback",
+    "tailscale": {
+      "mode": "serve"
+    }
+  }
+}
+```
+
+This exposes the gateway only to your tailnet -- not the public internet. If you want public access (for webhooks, etc.), you can use `"mode": "funnel"` instead, but that's rarely needed for personal setups.
+
+**Key security points:**
+- Keep `gateway.bind` set to `"loopback"` -- never `"0.0.0.0"`
+- Tailscale Serve/Funnel handles the networking layer securely
+- Your Tailscale IPs are private to your tailnet -- no one else can reach them
+- File permissions still matter: `~/.openclaw/` should be 700, `openclaw.json` should be 600
+
+## Sharing Dev Servers
+
+When your agent spins up a dev server (like the docs site we built), start it bound to all interfaces:
+
+```bash
+npx next dev --port 4567 --hostname 0.0.0.0
+```
+
+Then access it from your daily driver using the Tailscale IP:
+
+```
+http://100.x.x.x:4567
+```
+
+This is how I preview anything my agent builds without being physically at the Mac Mini.
+
+## Tailscale SSH (Alternative)
+
+Tailscale also has its own SSH feature that uses your Tailscale identity instead of SSH keys. You can enable it in the [Tailscale admin console](https://login.tailscale.com/admin/machines) under Access Controls. This means you don't need to manage SSH keys at all -- just `ssh macmini` and Tailscale handles auth.
+
+## Tips
+
+- Tailscale is free for personal use (up to 100 devices)
+- The Tailscale IP is stable -- it doesn't change when you switch networks
+- If the Mac Mini sleeps, Tailscale reconnects automatically when it wakes
+- You can see all your devices and their IPs at [login.tailscale.com/admin/machines](https://login.tailscale.com/admin/machines)

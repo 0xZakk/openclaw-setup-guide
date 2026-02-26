@@ -1,0 +1,99 @@
+---
+title: Mac Screen Sharing
+description: Access your headless Mac Mini remotely using Apple's built-in screen sharing
+---
+
+If your agent runs on a Mac Mini, you don't want to keep a monitor, keyboard, and mouse plugged into it permanently. You'll need them for initial setup, but after that you can manage everything remotely via Apple's built-in Screen Sharing -- even from a different network.
+
+## Initial Setup (On the Mac Mini)
+
+You need physical access for this part. Plug in a monitor, keyboard, and mouse, then:
+
+1. **Sign in with your Apple ID** -- System Settings > Apple ID. This is important for remote access from other networks.
+
+2. **Enable Screen Sharing:**
+   - System Settings > General > Sharing
+   - Turn on **Screen Sharing**
+   - Under "Allow access for," select your user account (or "All users" if you prefer)
+
+3. **Enable Remote Login (SSH):**
+   - Same Sharing screen, turn on **Remote Login**
+   - This lets you SSH in for terminal work without needing the full GUI
+
+4. **Enable Remote Management (optional but useful):**
+   - Same screen, turn on **Remote Management**
+   - This gives you more control options beyond basic screen sharing
+
+5. **Prevent sleep:**
+   - System Settings > Energy Saver (or Battery > Options on laptops)
+   - Set "Prevent automatic sleeping when the display is off" to ON
+   - This keeps the Mac Mini running 24/7 even without a monitor
+
+6. **Note the local hostname** -- shown in System Settings > General > Sharing at the top (e.g., `Zakks-Mac-mini.local`)
+
+Now unplug the monitor, keyboard, and mouse. The Mac Mini runs headless from here.
+
+## Connecting from the Same Network
+
+From your MacBook or other Mac on the same Wi-Fi/LAN:
+
+1. Open **Finder**
+2. In the sidebar under "Network," your Mac Mini should appear
+3. Click it, then click **Share Screen**
+
+Or use the Screen Sharing app directly:
+- Open **Screen Sharing.app** (search in Spotlight)
+- Enter the hostname: `Zakks-Mac-mini.local` (or whatever yours is)
+- Authenticate with the Mac Mini's user credentials
+
+Or from Terminal:
+```bash
+open vnc://Zakks-Mac-mini.local
+```
+
+## Connecting from a Different Network
+
+This is the key part -- accessing your Mac Mini when you're not home.
+
+### Option 1: Tailscale (Recommended)
+
+If you've set up [Tailscale](/foundation/tailscale-setup), this is trivial. Both machines are on the same tailnet, so Screen Sharing works just like a local connection:
+
+```bash
+open vnc://100.x.x.x
+```
+
+Use the Mac Mini's Tailscale IP. Works from anywhere -- coffee shop, office, travel. This is what I'd recommend.
+
+### Option 2: Apple ID / iCloud Remote Access
+
+Apple has built-in remote access through iCloud if both Macs are signed into the same Apple ID:
+
+1. On your MacBook, open **Screen Sharing.app**
+2. Click the People icon (or go to the Apple ID contacts section)
+3. Your Mac Mini should appear as a device under your Apple ID
+4. Click **Connect**
+
+This works across networks without any VPN setup, but it requires both machines to be signed into the same Apple ID and connected to the internet. It can be slower than Tailscale since traffic routes through Apple's relay servers.
+
+### Option 3: VNC with Port Forwarding (Not Recommended)
+
+You *can* forward port 5900 on your home router to the Mac Mini's local IP, then connect via your public IP. But this exposes VNC to the internet, which is a security risk. Use Tailscale instead.
+
+## Headless Display Resolution
+
+One quirk of running a Mac headless: without a physical monitor, macOS defaults to a low resolution (like 1024x768) for screen sharing. To get a usable resolution:
+
+**Option A: HDMI Dummy Plug**
+A $10 HDMI dummy plug tricks macOS into thinking a monitor is connected. Plug it into the HDMI port and macOS will use a normal resolution (1080p, 4K, etc.).
+
+**Option B: Software solution**
+Apps like [BetterDisplay](https://github.com/waydabber/BetterDisplay) let you create virtual displays at any resolution without a dummy plug.
+
+## Tips
+
+- Screen Sharing uses VNC under the hood, so any VNC client works (not just Apple's)
+- For quick terminal tasks, SSH is faster and lighter than a full screen sharing session
+- If the Mac Mini loses power and restarts, enable "Start up automatically after power failure" in System Settings > Energy Saver
+- The Mac Mini will reconnect to Tailscale automatically after a restart
+- Keep the Mac Mini plugged into Ethernet if possible -- more reliable than Wi-Fi for a headless machine
