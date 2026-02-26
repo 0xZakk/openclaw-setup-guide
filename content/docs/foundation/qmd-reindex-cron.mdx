@@ -3,7 +3,25 @@ title: Nightly QMD Reindex
 description: Keep search indexes fresh with a nightly reindex cron job
 ---
 
-Runs `qmd update` and `qmd embed` every night at 2 AM to reindex all search collections. New vault notes, memory files, and workspace changes all become searchable the next day.
+## What QMD Is
+
+[QMD](https://github.com/tobi/qmd) is a local search engine for markdown files. It indexes your files, generates vector embeddings for them, and gives your agent the ability to semantically search across everything -- not just keyword matching, but "find me notes related to this concept" kind of search.
+
+Your agent uses QMD when it needs to find something in your files. If you ask "what did we decide about the discovery platform architecture?" your agent can search across your vault, memory files, and workspace to find relevant notes instead of reading through hundreds of files manually. It supports keyword search (`qmd search`), semantic vector search (`qmd vsearch`), and hybrid search with reranking (`qmd query`).
+
+## What Gets Indexed
+
+QMD works with collections -- groups of markdown files from different directories. In my setup, I have three:
+
+- **workspace** -- the OpenClaw agent workspace (`~/.openclaw/workspace/`). All the agent config files, project docs, notes. About 4,300 files.
+- **memory** -- the agent's daily memory logs (`~/.openclaw/workspace/memory/`). Session logs, what happened each day. About 90 files and growing.
+- **slipbox** -- my LogSeq vault (`~/slipbox/`). All my zettelkasten notes, literature notes, reference notes, journal entries. About 4,300 files.
+
+That's around 8,800 files total with ~38,000 embedded vectors.
+
+## Why Reindex Nightly
+
+New files get created constantly -- journal entries, memory logs, vault notes, project docs. If you don't reindex, QMD's search results go stale. The nightly job runs `qmd update` to scan for new and changed files, then `qmd embed` to generate embeddings for anything new. This way when you ask your agent to search for something the next morning, it can find last night's notes.
 
 ## Setup Prompt (Cron Job)
 
@@ -14,7 +32,7 @@ Run these commands:
   qmd update
   qmd embed
 
-This updates all collections and regenerates embeddings for any
+This updates all QMD collections and regenerates embeddings for any
 new or changed files. Log results (file counts, any errors) in
 today's memory file. If there are errors, message me. Otherwise
 complete silently.
