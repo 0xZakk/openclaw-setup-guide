@@ -20,7 +20,7 @@ The way I have it set up: the entire `~/.openclaw/` directory is a Git repo. The
 
 This is the critical part. Your `.gitignore` needs to exclude anything sensitive or ephemeral:
 
-```gitignore
+```bash
 # Secrets and credentials -- NEVER commit these
 openclaw.json          # Contains API keys, bot tokens
 openclaw.json.bak
