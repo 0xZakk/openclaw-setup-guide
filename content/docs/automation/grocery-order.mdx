@@ -41,8 +41,11 @@ My diet: [describe your dietary preferences and staple items]
 
 ## Heads Up
 
-A few things I ran into:
+This has been pretty finicky in practice. The Whole Foods/Amazon web interface is complex and things break -- items route to Fresh instead of Whole Foods, or end up in the main Amazon cart instead of the grocery cart. Browser automation on these sites is fragile because the UI changes frequently.
+
+I haven't tried this with Instacart yet, which might be a better fit since their interface is simpler and more focused on groceries. That's on the list to experiment with.
+
+A few other things I ran into:
 - Always get approval before checkout. No auto-ordering.
-- Some items on Amazon route to Fresh instead of Whole Foods, or to the main Amazon cart. The agent needs to flag these.
 - Browser automation requires a saved login session (use a persistent browser profile).
-- Specialty items (I get meat from ranchers directly) may need to be handled separately.
+- Specialty items (I get meat from ranchers directly) need to be handled separately.
