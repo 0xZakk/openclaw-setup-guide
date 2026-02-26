@@ -47,3 +47,21 @@ that's no longer relevant.
 ```
 
 It's like a human reviewing their journal and updating their mental model. The daily files are raw notes; MEMORY.md is curated wisdom.
+
+## Keep in Mind: Storage vs. Working Memory
+
+A common assumption is that once your agent has a memory system, it just *knows* everything from past sessions. It doesn't. Each new session starts with a clean slate -- the agent loads recent daily logs and MEMORY.md at startup, but that's a summary, not a full replay of everything you've ever done together.
+
+Think of it like the difference between long-term memory and working memory. The files are long-term storage. But if you want something specific in the agent's working memory -- meaning actively in the context of the current session -- you need to ask it to go fetch that context.
+
+I do this all the time. If I've been working on a project across multiple days and multiple sessions, I'll start a new session by asking my agent to look back at the vault, previous session logs, and stored memories to bring back up what we were working on and where we left off. Something like:
+
+```
+I want to pick back up on the discovery platform project. Look through
+your memory files, our recent session logs, and the project docs to
+refresh yourself on where we are and what's left to do.
+```
+
+This is useful for you too because the agent will output a summary of the current state -- but it's mostly useful for the agent. It pulls all that context back into its working memory so it can pick up right where you left off instead of starting from scratch.
+
+The memory system gives your agent the *ability* to remember. But you still need to prompt it to actually recall specific things when a new session starts. Once you get in the habit, it's seamless.
