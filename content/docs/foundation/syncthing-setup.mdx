@@ -1,0 +1,53 @@
+---
+title: Syncthing
+description: Sync files between machines so your agent can access your vault and shared folders
+---
+
+## What Syncthing Is
+
+[Syncthing](https://syncthing.net/) is a free, open-source tool that syncs files between machines in real time. It's peer-to-peer -- no cloud service involved, files go directly from one machine to the other. You tell it which folders to share between which devices, and it keeps them in sync automatically.
+
+I use it instead of iCloud or Dropbox for a specific reason: iCloud causes file locking issues that break things. When your agent tries to read or write files in an iCloud-synced folder, you get deadlock errors constantly. Syncthing doesn't have this problem because it uses atomic file writes instead of cloud sync locks.
+
+## What I Sync
+
+The main thing is my LogSeq vault. The vault lives on my laptop where I use it day to day, but my OpenClaw agent runs on a Mac Mini. Syncthing keeps the vault synced between both machines in real time, so when I add a note in LogSeq on my laptop it shows up on the Mac Mini within seconds and the agent can read it. And when the agent creates notes (from the [zettelkasten pipeline](/knowledge-management/zettelkasten-skill), journal templates, etc.), those sync back to my laptop.
+
+Beyond the vault, I also sync a few other folders -- shared collaboration directories, reference documents, that kind of thing. Anything where both machines need access to the same files.
+
+## Setup
+
+Install Syncthing on both machines:
+
+```
+brew install syncthing
+```
+
+Then ask your agent to help with the rest:
+
+```
+I just installed Syncthing on both machines. Help me set it up:
+
+1. Start Syncthing on this machine
+2. Walk me through connecting the two devices
+3. Share my vault folder (~/slipbox/) bidirectionally between them
+4. Make sure it starts automatically on boot
+
+I'll need to do some steps on my other machine too, so tell me
+what to do on each one.
+```
+
+The setup involves exchanging device IDs between the two machines and then choosing which folders to share. Your agent can handle most of it, but you'll need to approve the connection on both sides through the Syncthing web UI (it runs at `http://127.0.0.1:8384`).
+
+If you want Syncthing to run as a background service that starts on boot, you can ask your agent to set up a launchd service for it -- same as described in the [scheduling and automation](/automation/scheduling-and-automation) page.
+
+## Where This Gets Used
+
+Syncthing is what makes a lot of the other systems work across multiple machines:
+
+- **[LogSeq Vault](/knowledge-management/logseq-vault)** -- the vault syncs between your daily-use machine and the machine running your agent, so the agent has real-time read/write access to your notes
+- **[Zettelkasten Skill](/knowledge-management/zettelkasten-skill)** -- when the agent creates reference notes and literature notes, they sync back to your laptop and show up in LogSeq
+- **[QMD Search](/foundation/qmd-reindex-cron)** -- QMD indexes the synced vault folder, so search results include your latest notes
+- **[Morning Writing Log](/life-os/morning-checkin)** and other journal cron jobs -- the agent writes to synced journal files that appear in your LogSeq instance
+
+If you're running everything on a single machine (your agent and your vault on the same computer), you don't need Syncthing. It's specifically for when your agent runs on a different machine than where you do your day-to-day work.
