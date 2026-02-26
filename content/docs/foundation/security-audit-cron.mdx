@@ -3,9 +3,7 @@ title: Weekly Security Audit
 description: Automated weekly security checks and permission verification
 ---
 
-## What It Does
-
-A weekly cron job that audits your OpenClaw installation's security posture: file permissions, security configuration, and any new advisories.
+A weekly cron job that checks file permissions, runs a security audit, and fixes anything that's drifted. Only messages me if something is actually wrong.
 
 ## Setup Prompt (Cron Job)
 
@@ -26,8 +24,6 @@ It should:
 
 Otherwise, complete silently.
 ```
-
-## Cron Configuration
 
 - **Schedule:** `0 10 * * 1` (10:00 AM every Monday)
 - **Timeout:** 180 seconds

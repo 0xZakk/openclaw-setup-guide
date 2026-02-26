@@ -3,11 +3,7 @@ title: Life OS Overview
 description: A daily operating system powered by journal templates and cron jobs
 ---
 
-## What It Does
-
-Life OS is a system of automated journal templates that structure your day. Your agent adds templates to your daily journal at scheduled times, giving you a lightweight framework for planning, reflection, and review.
-
-The components:
+Life OS is a system of automated journal templates that structure my day. Chewy adds templates to my LogSeq daily journal at scheduled times, giving me a lightweight framework for planning, reflection, and review without having to think about it.
 
 | Time | What | Frequency |
 |------|------|-----------|
@@ -17,28 +13,11 @@ The components:
 | 10:00 AM Sunday | [Weekly Review](/life-os/weekly-review) | Weekly |
 | 7:00 AM 1st | [Monthly Review](/life-os/monthly-review) | Monthly |
 
-## How It Works
-
-Each component is an OpenClaw **cron job** that runs as an isolated sub-agent. The sub-agent:
-
-1. Opens today's journal file in your vault
-2. Checks if the template already exists (skips if so -- idempotent)
-3. Appends the template
-4. Sends you a notification on Telegram
-5. Logs completion in the agent's memory
-
-You fill in the templates yourself. The agent just makes sure they're there waiting for you.
+Each one is an OpenClaw **cron job** running as an isolated sub-agent. The sub-agent opens today's journal, checks if the template already exists (so it's idempotent), appends it, sends me a Telegram notification, and logs completion. I fill in the templates myself. The agent just makes sure they're there waiting for me.
 
 ## The Hub
 
-In your vault, create a `[[Life OS]]` page that links to everything:
-
-- Goals (with measurable targets)
-- Active projects
-- Check-in templates
-- Tasks dashboard (if your vault app supports queries)
-
-This becomes your single entry point for "what am I doing and where am I going?"
+In your vault, create a `[[Life OS]]` page that links to everything -- goals, active projects, check-in templates, tasks. One entry point for "what am I doing and where am I going?"
 
 ## Setup Prompt
 

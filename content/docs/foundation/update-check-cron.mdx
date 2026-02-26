@@ -3,9 +3,7 @@ title: Nightly Update Check
 description: Check for OpenClaw updates and notify (never auto-install)
 ---
 
-## What It Does
-
-A nightly cron job that checks if a newer version of OpenClaw is available. If so, it messages you -- but never auto-installs. This is a safety measure: `npm install -g` removes the old package before installing the new one, so a failed install could leave OpenClaw completely gone.
+A nightly cron job that checks if a newer version of OpenClaw is available. If there is one, it messages me. It never auto-installs -- I learned the hard way that `npm install -g` removes the old package before installing the new one, so a failed install can leave you with no OpenClaw at all.
 
 ## Setup Prompt (Cron Job)
 
@@ -24,8 +22,5 @@ It should:
 This is check-and-notify only. I'll update manually when ready.
 ```
 
-## Cron Configuration
-
 - **Schedule:** `0 3 * * *` (3:00 AM daily)
 - **Timeout:** 60 seconds
-- **Delivery:** Announce only if update available

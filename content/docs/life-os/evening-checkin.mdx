@@ -3,9 +3,7 @@ title: Evening Check-in
 description: Daily reflection template added to your journal at 4 PM
 ---
 
-## What It Does
-
-A cron job that adds an evening reflection template to today's journal at 4 PM (or 5 PM -- pick your time). You fill it in as a daily wind-down ritual.
+A cron job that adds an evening reflection template at 4 PM (or 5 PM -- whatever works for you). I fill it in as a wind-down ritual at the end of the work day.
 
 ## Template
 
@@ -27,7 +25,7 @@ A cron job that adds an evening reflection template to today's journal at 4 PM (
   -
 ```
 
-The "Overnight work for the agent" section is key -- this is where you tell your agent what to work on while you sleep. It picks this up in the morning check-in.
+The "Overnight work for the agent" section is the key one -- that's where I tell Chewy what to work on while I sleep. It picks this up in the morning check-in's overnight report.
 
 ## Setup Prompt (Cron Job)
 
@@ -45,9 +43,9 @@ It should:
 Do not pre-fill any sections. Leave everything blank for me.
 ```
 
-## Optional: Personality Check
+## Optional: Custom Reflection Prompts
 
-You can add custom reflection prompts based on your growth edges:
+I added personality-specific reflection questions based on patterns I'm working on:
 
 ```markdown
 ### Personality check
@@ -55,4 +53,4 @@ You can add custom reflection prompts based on your growth edges:
   - Did I show up for someone without trying to solve anything?
 ```
 
-Customize these to whatever patterns you're working on.
+Customize these to whatever growth edges are relevant to you.

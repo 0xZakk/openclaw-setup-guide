@@ -3,18 +3,12 @@ title: Memory System
 description: Give your agent continuity across sessions with daily logs and curated long-term memory
 ---
 
-## What It Does
-
-Your agent wakes up fresh each session with no memory of previous conversations. The memory system fixes this with two layers:
+Your agent wakes up fresh each session with zero memory of previous conversations. The memory system fixes this with two layers:
 
 - **Daily logs** (`memory/YYYY-MM-DD.md`) -- Raw notes of what happened each day. Created automatically.
-- **Long-term memory** (`MEMORY.md`) -- Curated, distilled knowledge. Like the difference between a journal and a mental model.
+- **Long-term memory** (`MEMORY.md`) -- Curated, distilled knowledge. Think of it as the difference between a journal and a mental model.
 
-The agent reads recent daily logs and MEMORY.md at session start to rebuild context.
-
-## Why It Matters
-
-Without memory, you're re-explaining everything every session. With it, your agent knows your projects, preferences, decisions, and lessons learned. It compounds over time.
+The agent reads recent daily logs and MEMORY.md at session start to rebuild context. Without this, you're re-explaining everything every session. With it, your agent knows your projects, preferences, decisions, and past mistakes. It compounds over time -- genuinely one of the most important things to set up.
 
 ## Setup Prompt
 
@@ -43,13 +37,13 @@ Rules:
 
 ## Memory Maintenance
 
-Add this to your agent's periodic tasks (via heartbeat or cron):
+I also have my agent periodically review its own memory:
 
 ```
-Periodically (every few days), review recent memory/YYYY-MM-DD.md
-files. Identify significant events, lessons, or insights worth keeping
-long-term. Update MEMORY.md with distilled learnings. Remove outdated
-info that's no longer relevant.
+Every few days, review recent memory/YYYY-MM-DD.md files. Identify
+significant events, lessons, or insights worth keeping long-term.
+Update MEMORY.md with distilled learnings. Remove outdated info
+that's no longer relevant.
 ```
 
-This is like a human reviewing their journal and updating their mental model.
+It's like a human reviewing their journal and updating their mental model. The daily files are raw notes; MEMORY.md is curated wisdom.

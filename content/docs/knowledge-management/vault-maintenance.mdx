@@ -3,14 +3,12 @@ title: Vault Maintenance
 description: Cross-link notes, find underlinked pages, and strengthen the knowledge graph
 ---
 
-## What It Does
+As the vault grows, notes that should be connected sometimes aren't. This skill handles ongoing maintenance:
 
-A skill for maintaining and improving your vault by:
-
-- Finding underlinked pages (notes that should be connected but aren't)
-- Running semantic similarity analysis to discover related notes
-- Cross-linking notes that share concepts
-- Identifying stubs, duplicates, and low-value pages
+- Finding underlinked pages that should connect to other notes
+- Running semantic similarity searches to discover related content
+- Adding cross-links
+- Flagging stubs, duplicates, and orphan pages
 
 ## Setup Prompt
 
@@ -33,11 +31,11 @@ Periodically review the vault for maintenance:
 5. Log what you changed in today's memory file.
 
 Do this as a background task during quiet periods, or when explicitly
-asked. Don't modify note *content* -- only add links.
+asked. Don't modify note content -- only add links.
 ```
 
 ## Tips
 
-- Run vault maintenance after adding a batch of new notes
-- Use QMD's `vsearch` to find semantically similar notes that might not share keywords
-- Keep a light touch -- add links, don't rewrite notes
+- Run this after adding a batch of new notes. That's when there are the most unlinked connections.
+- QMD's `vsearch` is great here -- it finds semantically similar notes that might not share any keywords.
+- Keep a light touch. Add links, don't rewrite notes.

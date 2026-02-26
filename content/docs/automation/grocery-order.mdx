@@ -3,14 +3,12 @@ title: Grocery Ordering
 description: Automated grocery cart building with diet profile and browser automation
 ---
 
-## What It Does
+Chewy maintains my diet and grocery profile, then automates adding items to my Whole Foods cart via browser automation. I have a Sunday main delivery and a Wednesday banana/top-up delivery.
 
-Maintains a diet/grocery profile and automates adding items to your grocery cart via browser automation. The agent knows your dietary preferences, staple items, and delivery schedule.
-
-Components:
-- **Grocery profile** -- your diet, staple items, preferences, delivery cadence
-- **Browser automation** -- searches for items and adds them to your cart
-- **Delivery cadence** -- e.g., Sunday main delivery + Wednesday top-up
+The pieces:
+- **Grocery profile** (`grocery-profile.md`) -- diet, staple items, preferred brands, delivery cadence
+- **Browser automation** -- searches Whole Foods, adds items to cart
+- **Weekly cadence** -- cron check-ins for Sunday and Wednesday orders
 
 ## Setup Prompt
 
@@ -41,9 +39,10 @@ Set up a grocery automation system:
 My diet: [describe your dietary preferences and staple items]
 ```
 
-## Important Notes
+## Heads Up
 
-- Always get human approval before checkout
-- Some items may route to different carts (e.g., Amazon Fresh vs. Whole Foods) -- flag these
-- Browser automation requires a saved login session
-- Meat/specialty items may need to be sourced separately
+A few things I ran into:
+- Always get approval before checkout. No auto-ordering.
+- Some items on Amazon route to Fresh instead of Whole Foods, or to the main Amazon cart. The agent needs to flag these.
+- Browser automation requires a saved login session (use a persistent browser profile).
+- Specialty items (I get meat from ranchers directly) may need to be handled separately.

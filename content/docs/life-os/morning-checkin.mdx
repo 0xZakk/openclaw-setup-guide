@@ -3,9 +3,7 @@ title: Morning Check-in
 description: Daily planning template added to your journal at 8 AM
 ---
 
-## What It Does
-
-A cron job that adds a morning planning template to today's journal at 8 AM. The agent fills in the "overnight report" with what it worked on while you slept. You fill in the rest.
+A cron job that adds a morning planning template to today's journal at 8 AM. The agent fills in what it worked on overnight. I fill in the rest when I sit down.
 
 ## Template
 
@@ -48,5 +46,5 @@ Use the template EXACTLY as shown. Do not add or remove sections.
 - **Schedule:** `0 8 * * *` (8:00 AM daily)
 - **Timezone:** Your local timezone
 - **Session:** Isolated (runs as a sub-agent)
-- **Model:** Sonnet (cheap, this is a simple task)
+- **Model:** Sonnet (this is a simple task, no need for Opus)
 - **Timeout:** 180 seconds

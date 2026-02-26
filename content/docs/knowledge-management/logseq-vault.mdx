@@ -3,20 +3,16 @@ title: LogSeq/Obsidian Vault
 description: A personal knowledge base with atomic, interlinked notes
 ---
 
-## What It Does
+This is a zettelkasten-style knowledge vault where every note is an atomic idea connected to other ideas via bidirectional links. Two types of notes:
 
-A zettelkasten-style knowledge vault where every note is an atomic idea connected to other ideas via bidirectional links. Two types of notes:
+- **Reference notes** -- one per source (book, article, paper). Summarizes the source, links out to individual insights.
+- **Literature notes** -- one per idea. A standalone concept written in your own words. Cross-linked to related notes and back to the source.
 
-- **Reference notes** -- One per source (book, article, paper). Summarizes the source and links to individual insights.
-- **Literature notes** -- One per idea/insight. A standalone atomic concept written in your own words. Cross-linked to related notes.
+The vault becomes a web of interconnected knowledge. It gets more valuable the more you add to it because new notes connect to existing ones. I've built mine up to 350+ literature notes across dozens of books and papers.
 
-The vault becomes a web of interconnected knowledge that grows more valuable as you add to it.
+This works with either **LogSeq** or **Obsidian** -- both are local-first markdown editors with bidirectional linking. I use LogSeq. The method matters more than the tool.
 
-## Tools
-
-This works with either **LogSeq** or **Obsidian** -- both are local-first markdown editors with bidirectional linking. The key is the *method*, not the tool.
-
-For syncing between machines, we use **Syncthing** (free, peer-to-peer) rather than iCloud/Dropbox to avoid file locking issues.
+For syncing between machines, I use **Syncthing** (free, peer-to-peer) instead of iCloud or Dropbox. iCloud in particular causes file locking issues that will drive you crazy.
 
 ## Setup Prompt
 
@@ -49,10 +45,10 @@ Format rules:
 
 ## Syncthing Setup
 
-For syncing your vault between your personal machine and the machine running OpenClaw:
+If you want your agent to have direct access to the vault (highly recommended):
 
 1. Install Syncthing on both machines
 2. Share the vault folder bidirectionally
 3. Set conflict resolution to "newest wins"
 
-This gives the agent real-time read/write access to your vault without cloud sync issues.
+This gives the agent real-time read/write access without cloud sync headaches.

@@ -3,15 +3,9 @@ title: Coding Agent
 description: Delegate coding tasks to Claude Code or Codex sub-agents
 ---
 
-## What It Does
+This runs coding agents (Claude Code, Codex, etc.) as background sub-agents in PTY sessions. The main agent acts as orchestrator -- writes the spec, spawns the coding agent, monitors progress, reports back. I've shipped multiple projects this way without writing much code myself.
 
-Runs coding agents (Claude Code, Codex, etc.) as background sub-agents in PTY sessions. Your main agent acts as orchestrator -- it writes the spec, spawns the coding agent, monitors progress, and reports back.
-
-Good for:
-- Building new features or apps
-- Reviewing PRs (spawn in a temp directory)
-- Refactoring large codebases
-- Any iterative coding that needs file exploration
+Good for building new features, reviewing PRs (spawn in a temp directory), refactoring large codebases, and any iterative coding that needs file exploration.
 
 ## Setup Prompt
 
@@ -45,7 +39,7 @@ claude "Your task"  # in PTY background session
 
 ## Tips
 
-- **Spec quality matters** -- the better your spec, the better the output
-- **Use workdir** -- point the agent at the project directory so it stays focused
-- **Git init first** -- Codex requires a git repo
-- **Parallel is fine** -- run multiple agents on different tasks simultaneously
+- Spec quality matters more than anything else. Better specs = better output on the first pass.
+- Point the agent at the project directory with `workdir` so it stays focused.
+- Codex requires a git repo. Use `mktemp -d && git init` for scratch work.
+- Running multiple agents in parallel on different tasks works fine.

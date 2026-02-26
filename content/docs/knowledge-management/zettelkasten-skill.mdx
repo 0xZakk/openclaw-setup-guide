@@ -3,22 +3,14 @@ title: Zettelkasten Processing Skill
 description: A two-pass pipeline to turn any source into atomic vault notes
 ---
 
-## What It Does
-
-A structured pipeline that takes any source material (book highlights, articles, papers, YouTube videos, podcasts) and produces:
+This is the pipeline that takes any source material -- book highlights, articles, papers, YouTube videos, podcasts -- and produces structured vault notes:
 
 1. **Reference note** -- summary of the source with metadata
 2. **3-8 literature notes** -- individual atomic insights, cross-linked
 3. **Journal entry** -- logged in today's daily journal
 4. **Cross-links** -- connected to existing vault notes
 
-The pipeline uses two passes for quality:
-- **Pass 1 (Outline):** Read the source, identify key insights worth capturing
-- **Pass 2 (Write):** Write each note as a standalone atomic idea
-
-## Why Two Passes?
-
-A single pass tends to produce surface-level notes. The two-pass approach forces deeper thinking: first you decide *what's worth capturing*, then you write each note with full attention.
+It uses two passes. Pass 1 reads the source and outlines the key insights worth capturing. Pass 2 writes each note as a standalone atomic idea. A single pass tends to produce surface-level notes -- the two-pass approach forces deeper thinking.
 
 ## Setup Prompt
 
@@ -53,9 +45,8 @@ Rules:
 
 ## Cost Management
 
-Processing books into notes uses significant API tokens. Tips:
+Processing books into notes uses real tokens. A few things I learned:
 
-- Use a cheaper model (Sonnet) for the sub-agents that write individual notes
-- Use the expensive model (Opus) only for orchestration and validation
-- Batch in waves of 2-3 sources at a time
-- Space waves out to stay within rate limits
+- Use Sonnet for the sub-agents that write individual notes. Opus for orchestration only.
+- Batch in waves of 2-3 sources at a time.
+- Space waves out to stay within rate limits. I burned through a lot of quota early on before figuring out the right pace.

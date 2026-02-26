@@ -3,9 +3,7 @@ title: User Profile
 description: Tell your agent who you are, your preferences, and your goals
 ---
 
-## What It Does
-
-The `USER.md` file tells your agent who you are. It reads this at the start of every session. Include your name, what to call you, timezone, goals, and any key context about how you work.
+`USER.md` tells your agent who you are. It reads this at the start of every session. Name, nickname, timezone, goals, how you work -- whatever context helps it help you.
 
 ## Setup Prompt
 
@@ -24,17 +22,17 @@ Create a USER.md file with my info:
 
 ## What to Include
 
-The more context you give, the better your agent can help. Consider adding:
+The more context you give, the better. Some things worth adding:
 
 - **Work style** -- "I do deep work in the morning, meetings in the afternoon"
 - **Communication preferences** -- "Be direct, skip the pleasantries"
 - **Values** -- what matters to you (your agent can flag when you're drifting)
-- **Personality assessments** -- Enneagram, MBTI, etc. help the agent understand your patterns
-- **Growth edges** -- areas you're working on (the agent can gently flag patterns)
+- **Personality assessments** -- Enneagram, MBTI, etc. These actually help the agent understand your patterns.
+- **Growth edges** -- areas you're actively working on
 
 ## Advanced: Personality Pattern Flagging
 
-If you share personality assessment data, you can ask your agent to flag patterns:
+I went pretty deep on this. I fed Chewy all my personality assessment data (Enneagram, Golden Personality Profiler, values assessment, Birkman) and asked it to flag patterns when it sees them in conversation. For example, my Type 5 tendency to withdraw and conserve energy -- Chewy will call it out with something like "That sounds like scarcity thinking -- is it real?"
 
 ```
 Add a section to MEMORY.md for pattern flagging. Based on my

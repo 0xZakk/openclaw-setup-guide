@@ -5,25 +5,25 @@ description: Get OpenClaw up and running with the essentials
 
 ## Prerequisites
 
-- OpenClaw installed and running (`npm install -g openclaw`)
+- OpenClaw installed (`npm install -g openclaw`)
 - A messaging channel connected (Telegram, Discord, Signal, etc.)
-- An Anthropic API key configured
-- A machine that stays on (Mac, Linux server, Raspberry Pi)
+- An Anthropic API key
+- A machine that stays on (Mac, Linux server, Raspberry Pi -- whatever you've got)
 
 ## First Steps
 
-After installing OpenClaw and connecting your messaging channel, the first thing to do is give your agent an identity and teach it about you. This is what makes it *yours* rather than a generic chatbot.
+Once OpenClaw is installed and connected to your messaging channel, the first thing to do is give your agent an identity and teach it about you. This is what makes it *yours* instead of a generic chatbot.
 
 1. **Run the onboarding wizard:** `openclaw onboard`
-2. **Set up your workspace files** -- see [Agent Identity](/foundation/agent-identity), [User Profile](/foundation/user-profile), and [Memory System](/foundation/memory-system)
-3. **Add your first cron job** -- start with a [Morning Check-in](/life-os/morning-checkin) to see daily value immediately
-4. **Layer on from there** -- see [Minimum Viable Setup](/getting-started/minimum-viable-setup) for a phased rollout
+2. **Set up your workspace files** -- [Agent Identity](/foundation/agent-identity), [User Profile](/foundation/user-profile), and [Memory System](/foundation/memory-system)
+3. **Add your first cron job** -- I'd start with a [Morning Check-in](/life-os/morning-checkin). You'll see daily value immediately.
+4. **Layer on from there** -- check the [Minimum Viable Setup](/getting-started/minimum-viable-setup) for a phased rollout
 
 ## How This Guide Works
 
-Each page in this guide describes:
-- **What it does** -- the system/workflow/skill explained
-- **Setup Prompt** -- a prompt you can paste into your agent's chat to set it up
-- **Configuration** -- any config changes or external tools needed
+Each page covers one piece of the system:
+- A description of what it does and why I set it up
+- A **setup prompt** you can paste into your agent's chat to get it going
+- Any config changes or external tools you'll need
 
-Adapt everything to your own preferences. The prompts are starting points, not rigid scripts.
+Everything here is a starting point. Adapt it to how you actually work.

@@ -3,9 +3,7 @@ title: Nightly QMD Reindex
 description: Keep search indexes fresh with a nightly reindex cron job
 ---
 
-## What It Does
-
-Runs `qmd update` and `qmd embed` every night at 2 AM to reindex all search collections. This ensures new vault notes, memory files, and workspace changes are searchable the next day.
+Runs `qmd update` and `qmd embed` every night at 2 AM to reindex all search collections. New vault notes, memory files, and workspace changes all become searchable the next day.
 
 ## Setup Prompt (Cron Job)
 
@@ -21,8 +19,6 @@ new or changed files. Log results (file counts, any errors) in
 today's memory file. If there are errors, message me. Otherwise
 complete silently.
 ```
-
-## Cron Configuration
 
 - **Schedule:** `0 2 * * *` (2:00 AM daily)
 - **Timeout:** 600 seconds (embedding can be slow with large vaults)

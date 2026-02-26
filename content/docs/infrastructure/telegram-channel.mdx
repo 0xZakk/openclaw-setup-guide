@@ -3,13 +3,11 @@ title: Telegram Channel
 description: Connect your agent to Telegram for messaging
 ---
 
-## What It Does
-
-Telegram is the primary messaging surface -- how you talk to your agent from your phone or desktop. Messages you send on Telegram go to the agent; the agent's replies come back to Telegram.
+Telegram is how I talk to Chewy. Messages I send go to the agent, replies come back to Telegram. Works from phone or desktop.
 
 ## Setup
 
-1. Create a Telegram bot via [@BotFather](https://t.me/botfather)
+1. Create a bot via [@BotFather](https://t.me/botfather) on Telegram
 2. Get the bot token
 3. Add to OpenClaw config:
 
@@ -28,18 +26,12 @@ Telegram is the primary messaging surface -- how you talk to your agent from you
 ```
 
 4. Start a chat with your bot on Telegram
-5. OpenClaw will prompt you to pair (approve the pairing)
+5. OpenClaw will prompt you to pair -- approve it
 
-## Configuration Options
+## Configuration
 
-- **dmPolicy: "pairing"** -- requires pairing approval for DMs (recommended)
-- **groupPolicy: "allowlist"** -- only responds in approved groups
-- **streamMode: "partial"** -- streams partial responses as the agent types
+- **dmPolicy: "pairing"** -- requires approval for new DM conversations (recommended)
+- **groupPolicy: "allowlist"** -- only responds in groups you've explicitly approved
+- **streamMode: "partial"** -- streams partial responses as the agent types, so you're not staring at nothing
 
-## Features
-
-- Voice messages are transcribed automatically (if audio transcription is configured)
-- Images are analyzed via vision models
-- Files can be sent and received
-- Inline buttons for interactive prompts
-- Reactions on messages
+Voice messages get transcribed automatically if you've set up [audio transcription](/infrastructure/audio-transcription). Images are analyzed via vision models. Files can go both ways.

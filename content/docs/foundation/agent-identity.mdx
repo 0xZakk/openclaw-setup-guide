@@ -3,19 +3,15 @@ title: Agent Identity
 description: Give your agent a name, personality, and consistent persona
 ---
 
-## What It Does
+Your agent reads identity files at the start of every session to know who it is. Without these, it's a blank slate each time. With them, it has a consistent personality and knows how to talk to you.
 
-Your agent reads identity files at the start of every session to know who it is. Without these, it's a generic chatbot. With them, it has a consistent personality, communication style, and set of operating principles across every conversation.
-
-Three files define your agent:
+Three files:
 
 - **IDENTITY.md** -- Name, creature type, vibe, emoji/avatar
-- **SOUL.md** -- Core personality traits, communication boundaries, the "vibe"
-- **AGENTS.md** -- Operating instructions, safety rules, memory protocol, file organization
+- **SOUL.md** -- Core personality, communication style, boundaries
+- **AGENTS.md** -- Operating instructions, safety rules, memory protocol, file conventions
 
-## Why It Matters
-
-A named agent with personality is qualitatively different from a blank one. It makes conversation more natural, gives the agent consistent behavior, and makes it feel like *your* assistant rather than a rented one.
+A named agent with a personality is qualitatively different from a blank one. Conversations feel more natural, behavior stays consistent, and it actually feels like *your* assistant.
 
 ## Setup Prompt
 
@@ -45,6 +41,6 @@ I want to set up my agent's identity. Help me create three files:
 
 ## Tips
 
-- **Iterate on SOUL.md** -- you'll refine it over weeks as you learn what works
-- **Be specific about what annoys you** -- if you hate emoji, say so. If you hate corporate speak, say so.
-- **Let the agent evolve it** -- tell it "update SOUL.md if you learn something about how to work with me"
+- You'll refine SOUL.md over weeks as you figure out what works. That's normal.
+- Be specific about what annoys you. If you hate emoji, say so. If corporate speak makes you cringe, say so.
+- Tell the agent "update SOUL.md if you learn something about how to work with me" -- it'll evolve on its own.
