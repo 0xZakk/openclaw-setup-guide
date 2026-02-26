@@ -1,0 +1,53 @@
+---
+title: PARA Organization
+description: Organize your workspace using Tiago Forte's PARA method
+---
+
+## What It Does
+
+Organizes every file in the workspace by actionability using Tiago Forte's PARA method:
+
+- **Projects** -- Active work with a defined goal and end date
+- **Areas** -- Ongoing responsibilities with standards to maintain
+- **Resources** -- Topics of interest for reference and learning
+- **Archive** -- Inactive items from the other three categories
+
+The key insight: organize by *actionability*, not by *topic*.
+
+## Setup Prompt
+
+```
+Set up PARA organization in the workspace. Create a PARA.md file
+documenting the system and create these directories:
+
+- projects/ -- Active projects with clear goals and end dates
+- areas/ -- Ongoing responsibilities (health, finances, career)
+- resources/ -- Reference material and topics of interest
+- archive/ -- Inactive items from the other three
+
+Include a decision flowchart:
+1. Is it an active project with a clear goal? -> projects/
+2. Is it an ongoing responsibility? -> areas/
+3. Is it just interesting/reference? -> resources/
+4. No longer active? -> archive/
+
+Rules:
+- Projects have goals. Areas have standards. Don't confuse them.
+- Keep it flat -- one level of subfolders under each category.
+- Move, don't delete. Archive is the safety net.
+- Everything stays inside the workspace directory.
+
+Maintenance cadence:
+- Weekly: are active projects still active?
+- Monthly: any new/ended areas?
+- Quarterly: prune resources and archive
+```
+
+## Examples
+
+| Item | Category | Why |
+|------|----------|-----|
+| Building a docs site | `projects/docs-site/` | Has a goal (launch) and end date |
+| Health tracking | `areas/health/` | Ongoing, no finish line |
+| AI research papers | `resources/ai/` | Reference material, no obligation |
+| Old portfolio site | `archive/projects/portfolio/` | Done, might reference later |

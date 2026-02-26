@@ -1,0 +1,48 @@
+---
+title: Ralph Workflow
+description: Structured spec-driven development with TDD and validation gates
+---
+
+## What It Does
+
+Ralph is a structured coding loop: write specs with acceptance criteria, run a coding agent against them, validate output, iterate until all criteria pass. It's the difference between "build me a thing" and "here's exactly what I need, with tests."
+
+## The Loop
+
+1. **Write specs** -- detailed requirements with Given/When/Then acceptance criteria
+2. **Create ralph.yml** -- configuration for the project
+3. **Run Ralph** -- it spawns a coding agent, runs the spec, validates output
+4. **Iterate** -- if tests fail, Ralph loops: implement -> test -> validate -> fix
+
+## Setup Prompt
+
+```
+Set up the Ralph workflow for spec-driven development:
+
+1. Before coding anything, write detailed specs with:
+   - Clear requirements
+   - Acceptance criteria (Given/When/Then format)
+   - Design system docs if relevant
+   - Tech stack decisions
+
+2. Create a ralph.yml config for the project
+
+3. Run Ralph in a PTY session with the spec
+
+4. Ralph loops: implement -> test -> validate -> fix until all
+   acceptance criteria pass
+
+5. Report results back to me
+
+Key principle: front-load the documentation. Better specs = better
+code on the first pass. Spend 30% of the time on specs and 70%
+on implementation, not the other way around.
+```
+
+## Lessons Learned
+
+- **Write spec docs BEFORE starting Ralph** -- it works best with detailed specs
+- **Include design system docs** -- colors, spacing, component patterns
+- **Given/When/Then format** -- unambiguous acceptance criteria
+- **Ralph can timeout** -- use background mode with long timeout for big tasks
+- **Multi-task pipelines** -- Ralph can run sequential tasks (e.g., fix tests -> build feature -> add dashboard)

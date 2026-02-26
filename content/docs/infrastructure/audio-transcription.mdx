@@ -1,0 +1,51 @@
+---
+title: Local Audio Transcription
+description: Transcribe voice messages locally using Whisper.cpp
+---
+
+## What It Does
+
+Transcribes voice messages and audio files locally using Whisper.cpp. No cloud API needed -- everything runs on your machine. When someone sends a voice message on Telegram, the agent automatically transcribes it.
+
+## Setup
+
+Install whisper-cpp and ffmpeg:
+
+```bash
+brew install whisper-cpp ffmpeg
+whisper-cli --download-model small
+```
+
+Then add to OpenClaw config under `tools.media.audio`:
+
+```json
+{
+  "tools": {
+    "media": {
+      "audio": {
+        "enabled": true,
+        "models": [{
+          "type": "cli",
+          "command": "sh",
+          "args": [
+            "-c",
+            "ffmpeg -i \"$1\" -ar 16000 -ac 1 /tmp/openclaw_audio.wav -y 2>/dev/null && whisper-cli -m ~/.local/share/whisper-cpp/ggml-small.bin -f /tmp/openclaw_audio.wav --no-timestamps 2>/dev/null",
+            "--",
+            "{{MediaPath}}"
+          ],
+          "timeoutSeconds": 120
+        }]
+      }
+    }
+  }
+}
+```
+
+## How It Works
+
+1. Audio arrives (voice message, audio file)
+2. ffmpeg converts it to 16kHz mono WAV
+3. Whisper.cpp transcribes it locally
+4. The transcript is passed to the agent as text
+
+The `small` model is a good balance of speed and accuracy. Use `medium` or `large` for better accuracy at the cost of speed.

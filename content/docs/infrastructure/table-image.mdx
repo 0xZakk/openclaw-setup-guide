@@ -1,0 +1,34 @@
+---
+title: Table Image Rendering
+description: Convert markdown tables to PNG images for Telegram
+---
+
+## What It Does
+
+Telegram doesn't render markdown tables. This skill converts tables to PNG images so they display properly. Uses `tablesnap`, a Go CLI tool.
+
+## Setup
+
+```bash
+# Install via ClawHub
+clawhub install table-image
+
+# Or install the binary directly
+go install github.com/example/tablesnap@latest
+
+# Enable full emoji support
+tablesnap emojis install
+```
+
+## Usage
+
+```bash
+echo "| Column 1 | Column 2 |
+|----------|----------|
+| Data     | 123      |
+| More     | 456      |" | tablesnap -o /tmp/table.png
+```
+
+Options: `--theme dark|light`, `--font-size 14`, `--padding 10`
+
+Then send the image via the message tool with `filePath=/tmp/table.png`.

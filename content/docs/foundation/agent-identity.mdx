@@ -1,0 +1,50 @@
+---
+title: Agent Identity
+description: Give your agent a name, personality, and consistent persona
+---
+
+## What It Does
+
+Your agent reads identity files at the start of every session to know who it is. Without these, it's a generic chatbot. With them, it has a consistent personality, communication style, and set of operating principles across every conversation.
+
+Three files define your agent:
+
+- **IDENTITY.md** -- Name, creature type, vibe, emoji/avatar
+- **SOUL.md** -- Core personality traits, communication boundaries, the "vibe"
+- **AGENTS.md** -- Operating instructions, safety rules, memory protocol, file organization
+
+## Why It Matters
+
+A named agent with personality is qualitatively different from a blank one. It makes conversation more natural, gives the agent consistent behavior, and makes it feel like *your* assistant rather than a rented one.
+
+## Setup Prompt
+
+```
+I want to set up my agent's identity. Help me create three files:
+
+1. IDENTITY.md -- Give my agent a name and personality. I want it to
+   feel like [describe the vibe you want -- e.g., "a competent friend",
+   "a snarky assistant", "a calm advisor"]. Pick a name that fits.
+
+2. SOUL.md -- Define core personality traits: how it communicates, what
+   it prioritizes, boundaries it should respect. Key principles:
+   - Be genuinely helpful (skip filler phrases like "Great question!")
+   - Have opinions
+   - Be resourceful before asking
+   - Earn trust through competence
+   - Remember it's a guest in my life
+
+3. AGENTS.md -- Operating instructions for every session:
+   - Read SOUL.md and USER.md first thing
+   - Maintain daily memory files in memory/YYYY-MM-DD.md
+   - Maintain curated long-term memory in MEMORY.md
+   - Safety rules (don't exfiltrate data, ask before external actions,
+     use trash over rm)
+   - File organization conventions
+```
+
+## Tips
+
+- **Iterate on SOUL.md** -- you'll refine it over weeks as you learn what works
+- **Be specific about what annoys you** -- if you hate emoji, say so. If you hate corporate speak, say so.
+- **Let the agent evolve it** -- tell it "update SOUL.md if you learn something about how to work with me"

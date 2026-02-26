@@ -1,0 +1,56 @@
+---
+title: Heartbeat System
+description: Periodic proactive check-ins for background monitoring
+---
+
+## What It Does
+
+OpenClaw sends periodic "heartbeat" polls to your agent. On each heartbeat, the agent reads `HEARTBEAT.md` and performs whatever tasks are listed. This is how your agent does proactive work without being asked.
+
+## Good Heartbeat Tasks
+
+- Check email for urgent messages
+- Check calendar for upcoming events (next 2-24 hours)
+- Check weather if you might go out
+- Review notifications (Twitter mentions, GitHub, etc.)
+- Do background organization (memory maintenance, vault cleanup)
+
+## Setup Prompt
+
+```
+Set up HEARTBEAT.md in the workspace. When you get a heartbeat poll:
+
+1. Read HEARTBEAT.md for any tasks
+2. If tasks are listed, do them
+3. If empty or only comments, reply HEARTBEAT_OK
+
+Track what you last checked in memory/heartbeat-state.json:
+{
+  "lastChecks": {
+    "email": <timestamp>,
+    "calendar": <timestamp>,
+    "weather": null
+  }
+}
+
+Rules:
+- Rotate through 2-4 checks per day (don't check everything
+  every time)
+- Stay quiet at night (11 PM - 8 AM) unless urgent
+- Only reach out if something needs attention:
+  - Important email arrived
+  - Calendar event coming up (<2 hours)
+  - Something interesting found
+- Be quiet otherwise (HEARTBEAT_OK)
+```
+
+## Heartbeat vs. Cron
+
+| Use Heartbeat When | Use Cron When |
+|---------------------|---------------|
+| Multiple checks can batch together | Exact timing matters |
+| You need conversational context | Task needs isolation |
+| Timing can drift slightly | One-shot reminders |
+| Reducing API calls by combining checks | Output should go directly to a channel |
+
+**Tip:** Batch similar periodic checks into HEARTBEAT.md instead of creating multiple cron jobs. Use cron for precise schedules and standalone tasks.

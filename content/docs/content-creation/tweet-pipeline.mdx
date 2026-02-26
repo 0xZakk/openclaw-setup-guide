@@ -1,0 +1,52 @@
+---
+title: Tweet Pipeline
+description: Turn vault notes into tweets that match your voice
+---
+
+## What It Does
+
+A skill that pulls insights from your vault (literature notes, reference notes, research) and turns them into tweet drafts that match your writing voice. Includes 50+ viral tweet templates adapted to sound natural rather than formulaic.
+
+## Workflow Modes
+
+1. **Single note** -- Turn one specific vault note into a tweet
+2. **Daily batch** -- Agent picks 2-3 interesting notes and drafts tweets
+3. **Theme thread** -- Build a thread from related notes on a topic
+
+## Setup Prompt
+
+```
+Create a tweet pipeline skill. It should:
+
+1. Pull interesting insights from my vault (literature notes,
+   reference notes, recent additions)
+2. Match them against tweet templates:
+   - Contrarian take
+   - Hard truth / uncomfortable observation
+   - Before/after comparison
+   - Simple observation or reflection
+   - Question to the audience
+   - Sharing something specific and interesting
+3. Write 2-3 draft tweets in my voice (reference VOICE.md)
+4. Save drafts to workspace/tweets/drafts/YYYY-MM-DD.md
+5. NEVER post without my explicit approval
+
+Goal: 2-3 tweets per day with minimal effort on my part.
+
+Key rule: The tweets should sound like me sharing something
+interesting, NOT like a content creator trying to go viral.
+Reference VOICE.md for my actual patterns and anti-patterns.
+```
+
+## Template Examples
+
+Good tweet templates that don't sound like templates:
+
+- **Sharing a finding:** "[Source] found that [specific interesting thing]. [Brief reaction]"
+- **Observation:** "I started [doing X] and now I [unexpected result]"
+- **Question:** "For the [audience] out there: [genuine question]?"
+- **Contrarian:** "[Common belief]. But [what I actually found]."
+
+## Important
+
+Always review drafts before posting. The agent drafts, you approve. Never automate posting.

@@ -1,0 +1,55 @@
+---
+title: Memory System
+description: Give your agent continuity across sessions with daily logs and curated long-term memory
+---
+
+## What It Does
+
+Your agent wakes up fresh each session with no memory of previous conversations. The memory system fixes this with two layers:
+
+- **Daily logs** (`memory/YYYY-MM-DD.md`) -- Raw notes of what happened each day. Created automatically.
+- **Long-term memory** (`MEMORY.md`) -- Curated, distilled knowledge. Like the difference between a journal and a mental model.
+
+The agent reads recent daily logs and MEMORY.md at session start to rebuild context.
+
+## Why It Matters
+
+Without memory, you're re-explaining everything every session. With it, your agent knows your projects, preferences, decisions, and lessons learned. It compounds over time.
+
+## Setup Prompt
+
+```
+Set up a memory system for yourself. Create a `memory/` directory in
+the workspace. Start a daily log at `memory/YYYY-MM-DD.md` for today.
+
+Create a `MEMORY.md` file with sections for:
+- Key Facts (about me)
+- Important Decisions
+- Lessons Learned
+- Systems (things we've set up)
+- Projects (what we're working on)
+- Accounts and Credentials (references, not secrets)
+
+During heartbeats, periodically review daily files and promote
+important things to MEMORY.md. Think of daily files as your journal
+and MEMORY.md as your long-term mental model.
+
+Rules:
+- Write it down -- "mental notes" don't survive restarts
+- When someone says "remember this" -> update the memory file
+- When you learn a lesson -> document it
+- When you make a mistake -> write it down so you don't repeat it
+```
+
+## Memory Maintenance
+
+Add this to your agent's periodic tasks (via heartbeat or cron):
+
+```
+Periodically (every few days), review recent memory/YYYY-MM-DD.md
+files. Identify significant events, lessons, or insights worth keeping
+long-term. Update MEMORY.md with distilled learnings. Remove outdated
+info that's no longer relevant.
+```
+
+This is like a human reviewing their journal and updating their mental model.

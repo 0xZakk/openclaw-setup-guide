@@ -1,0 +1,58 @@
+---
+title: Evening Check-in
+description: Daily reflection template added to your journal at 4 PM
+---
+
+## What It Does
+
+A cron job that adds an evening reflection template to today's journal at 4 PM (or 5 PM -- pick your time). You fill it in as a daily wind-down ritual.
+
+## Template
+
+```markdown
+## Daily Evening Check-in
+### What got done today?
+  -
+### What didn't get done? Why?
+  -
+### What's the plan for tomorrow?
+  - Priority 1:
+  - Priority 2:
+  - Priority 3:
+### Overnight work for the agent
+  -
+### Any blockers or decisions needed?
+  -
+### Energy/mood check (1-10)
+  -
+```
+
+The "Overnight work for the agent" section is key -- this is where you tell your agent what to work on while you sleep. It picks this up in the morning check-in.
+
+## Setup Prompt (Cron Job)
+
+```
+Create a cron job called "Daily Evening Check-in" that runs at
+4:00 PM [your timezone] every day.
+
+It should:
+1. Read today's journal file
+2. Check if an evening check-in already exists. If yes, skip.
+3. Append the evening check-in template
+4. Send me a message letting me know it's ready
+5. Log completion in today's memory file
+
+Do not pre-fill any sections. Leave everything blank for me.
+```
+
+## Optional: Personality Check
+
+You can add custom reflection prompts based on your growth edges:
+
+```markdown
+### Personality check
+  - Did I pull back from something I shouldn't have?
+  - Did I show up for someone without trying to solve anything?
+```
+
+Customize these to whatever patterns you're working on.

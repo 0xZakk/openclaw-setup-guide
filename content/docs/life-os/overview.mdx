@@ -1,0 +1,59 @@
+---
+title: Life OS Overview
+description: A daily operating system powered by journal templates and cron jobs
+---
+
+## What It Does
+
+Life OS is a system of automated journal templates that structure your day. Your agent adds templates to your daily journal at scheduled times, giving you a lightweight framework for planning, reflection, and review.
+
+The components:
+
+| Time | What | Frequency |
+|------|------|-----------|
+| 5:00 AM | [Morning Writing Log](/docs/life-os/writing-log) | Daily |
+| 8:00 AM | [Morning Check-in](/docs/life-os/morning-checkin) | Daily |
+| 4:00 PM | [Evening Check-in](/docs/life-os/evening-checkin) | Daily |
+| 10:00 AM Sunday | [Weekly Review](/docs/life-os/weekly-review) | Weekly |
+| 7:00 AM 1st | [Monthly Review](/docs/life-os/monthly-review) | Monthly |
+
+## How It Works
+
+Each component is an OpenClaw **cron job** that runs as an isolated sub-agent. The sub-agent:
+
+1. Opens today's journal file in your vault
+2. Checks if the template already exists (skips if so -- idempotent)
+3. Appends the template
+4. Sends you a notification on Telegram
+5. Logs completion in the agent's memory
+
+You fill in the templates yourself. The agent just makes sure they're there waiting for you.
+
+## The Hub
+
+In your vault, create a `[[Life OS]]` page that links to everything:
+
+- Goals (with measurable targets)
+- Active projects
+- Check-in templates
+- Tasks dashboard (if your vault app supports queries)
+
+This becomes your single entry point for "what am I doing and where am I going?"
+
+## Setup Prompt
+
+```
+Set up a Life OS system in my vault. Create a [[Life OS]] hub page
+that links to:
+- My goals (I'll fill these in)
+- Active projects
+- Check-in schedule
+
+Then set up the daily, weekly, and monthly cron jobs described in
+the Life OS section of this guide.
+
+All templates go in my daily journal at [your journal path].
+Each cron job should check if the template already exists before
+adding it (idempotent). Notify me on [Telegram/Discord/etc.] when
+each template is ready.
+```

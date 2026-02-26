@@ -1,0 +1,48 @@
+---
+title: User Profile
+description: Tell your agent who you are, your preferences, and your goals
+---
+
+## What It Does
+
+The `USER.md` file tells your agent who you are. It reads this at the start of every session. Include your name, what to call you, timezone, goals, and any key context about how you work.
+
+## Setup Prompt
+
+```
+Create a USER.md file with my info:
+- Name: [your full name]
+- What to call me: [nickname]
+- Pronouns: [if you want to specify]
+- Timezone: [e.g., America/Chicago]
+- Location: [city]
+- Social profiles: [Twitter, GitHub, etc.]
+- Key context: [what you want help with]
+- Current goals: [your top 2-3 goals]
+- Notes: [anything else relevant -- work style, preferences, etc.]
+```
+
+## What to Include
+
+The more context you give, the better your agent can help. Consider adding:
+
+- **Work style** -- "I do deep work in the morning, meetings in the afternoon"
+- **Communication preferences** -- "Be direct, skip the pleasantries"
+- **Values** -- what matters to you (your agent can flag when you're drifting)
+- **Personality assessments** -- Enneagram, MBTI, etc. help the agent understand your patterns
+- **Growth edges** -- areas you're working on (the agent can gently flag patterns)
+
+## Advanced: Personality Pattern Flagging
+
+If you share personality assessment data, you can ask your agent to flag patterns:
+
+```
+Add a section to MEMORY.md for pattern flagging. Based on my
+personality profile, flag these patterns when you see them:
+- [pattern 1] -- brief description of what to watch for
+- [pattern 2]
+- etc.
+
+How to flag: Brief, non-preachy. Just name it and move on.
+Example: "That sounds like scarcity thinking -- is it real?"
+```

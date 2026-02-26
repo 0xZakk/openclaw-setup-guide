@@ -1,0 +1,38 @@
+---
+title: Brave Search API
+description: Web search without opening a browser
+---
+
+## What It Does
+
+Lets your agent search the web programmatically using Brave's Search API. No browser needed -- just fast search results with titles, URLs, and snippets.
+
+## Setup
+
+1. Sign up at [search.brave.com/api](https://search.brave.com/api)
+2. Get an API key
+3. Add to OpenClaw config:
+
+```json
+{
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true,
+        "apiKey": "your-brave-api-key"
+      }
+    }
+  }
+}
+```
+
+Or use the gateway config patch:
+
+```
+Update my OpenClaw config to enable Brave Search with API key [your-key].
+Set tools.web.search.enabled = true and tools.web.search.apiKey.
+```
+
+## Usage
+
+Once configured, the agent can use `web_search` to find information without opening a browser. It also has `web_fetch` for pulling content from specific URLs.

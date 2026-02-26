@@ -1,0 +1,52 @@
+---
+title: Morning Check-in
+description: Daily planning template added to your journal at 8 AM
+---
+
+## What It Does
+
+A cron job that adds a morning planning template to today's journal at 8 AM. The agent fills in the "overnight report" with what it worked on while you slept. You fill in the rest.
+
+## Template
+
+```markdown
+## Daily Morning Check-in
+### Overnight report
+  - (Agent fills in what it worked on, or "No overnight tasks.")
+### Today's plan
+  - Priority 1:
+  - Priority 2:
+  - Priority 3:
+### Calendar conflicts?
+  -
+### One thing that would make today great
+  -
+```
+
+## Setup Prompt (Cron Job)
+
+```
+Create a cron job called "Daily Morning Check-in" that runs at
+8:00 AM [your timezone] every day.
+
+It should:
+1. Read today's journal file. Create it if it doesn't exist.
+2. Check if a morning check-in already exists (search for
+   "Daily Morning Check-in"). If yes, skip.
+3. Check memory files for any overnight work you completed.
+4. Append the morning check-in template. Fill in ONLY the
+   "Overnight report" section with what you actually did.
+   Leave all other sections blank for me to complete.
+5. Send me a message letting me know it's ready.
+6. Log completion in today's memory file.
+
+Use the template EXACTLY as shown. Do not add or remove sections.
+```
+
+## Cron Configuration
+
+- **Schedule:** `0 8 * * *` (8:00 AM daily)
+- **Timezone:** Your local timezone
+- **Session:** Isolated (runs as a sub-agent)
+- **Model:** Sonnet (cheap, this is a simple task)
+- **Timeout:** 180 seconds

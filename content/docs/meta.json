@@ -1,0 +1,14 @@
+{
+  "title": "Guide",
+  "pages": [
+    "index",
+    "getting-started",
+    "foundation",
+    "knowledge-management",
+    "life-os",
+    "content-creation",
+    "development",
+    "automation",
+    "infrastructure"
+  ]
+}

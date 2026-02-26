@@ -1,0 +1,42 @@
+---
+title: GitHub Integration
+description: PR management, issues, and CI via the gh CLI
+---
+
+## What It Does
+
+Uses the GitHub CLI (`gh`) for repository operations: creating/viewing issues, managing PRs, checking CI runs, code review, and API queries.
+
+## Prerequisites
+
+```bash
+brew install gh
+gh auth login
+```
+
+## Capabilities
+
+- **Issues:** Create, list, filter, comment, close
+- **PRs:** Create, review, merge, check status
+- **CI:** View workflow runs, check logs, re-run failed jobs
+- **Code review:** Diff PRs, add review comments
+- **API:** Query any GitHub API endpoint
+
+## Setup Prompt
+
+```
+You have access to the GitHub CLI (gh). Use it for all GitHub
+operations:
+
+- Check PR status: gh pr status, gh pr view <number>
+- Create issues: gh issue create --title "..." --body "..."
+- List PRs: gh pr list --state open
+- View CI: gh run list, gh run view <id>
+- Code review: gh pr diff <number>
+
+When I ask about a repo, use gh to look it up rather than
+searching the web. When I ask you to create a PR, use gh pr create.
+
+For batch PR reviews, clone to a temp directory first -- never
+review PRs in the OpenClaw workspace.
+```

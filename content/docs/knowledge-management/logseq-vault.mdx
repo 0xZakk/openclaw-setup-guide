@@ -1,0 +1,58 @@
+---
+title: LogSeq/Obsidian Vault
+description: A personal knowledge base with atomic, interlinked notes
+---
+
+## What It Does
+
+A zettelkasten-style knowledge vault where every note is an atomic idea connected to other ideas via bidirectional links. Two types of notes:
+
+- **Reference notes** -- One per source (book, article, paper). Summarizes the source and links to individual insights.
+- **Literature notes** -- One per idea/insight. A standalone atomic concept written in your own words. Cross-linked to related notes.
+
+The vault becomes a web of interconnected knowledge that grows more valuable as you add to it.
+
+## Tools
+
+This works with either **LogSeq** or **Obsidian** -- both are local-first markdown editors with bidirectional linking. The key is the *method*, not the tool.
+
+For syncing between machines, we use **Syncthing** (free, peer-to-peer) rather than iCloud/Dropbox to avoid file locking issues.
+
+## Setup Prompt
+
+```
+I use [LogSeq/Obsidian] as my knowledge vault at [path].
+
+Set up a zettelkasten system:
+
+- Reference notes: One per source (book, article, paper). Contains:
+  summary, key concepts (linked to literature notes), key quotes,
+  metadata (authors, date, URL).
+
+- Literature notes: One per idea/insight. Standalone atomic ideas
+  written in my own words (2-3 paragraphs). Linked back to the source
+  and cross-linked to related notes.
+
+- Daily journals: At [journal path]. Log what was added each day.
+
+When I send you a source to process, create the reference note,
+extract 3-8 literature notes, cross-link everything, and update
+the daily journal.
+
+Format rules:
+- Literature note titles should be full sentences expressing the
+  core idea (e.g., "Human training data gives AI a faster start
+  but a lower ceiling")
+- All cross-linking should be bidirectional where relevant
+- No subdirectories -- all pages in a flat folder
+```
+
+## Syncthing Setup
+
+For syncing your vault between your personal machine and the machine running OpenClaw:
+
+1. Install Syncthing on both machines
+2. Share the vault folder bidirectionally
+3. Set conflict resolution to "newest wins"
+
+This gives the agent real-time read/write access to your vault without cloud sync issues.

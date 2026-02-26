@@ -1,0 +1,41 @@
+---
+title: Weekly Security Audit
+description: Automated weekly security checks and permission verification
+---
+
+## What It Does
+
+A weekly cron job that audits your OpenClaw installation's security posture: file permissions, security configuration, and any new advisories.
+
+## Setup Prompt (Cron Job)
+
+```
+Create a cron job called "Weekly Security Audit" at 10:00 AM
+on Mondays.
+
+It should:
+1. Run `openclaw security audit --deep`
+2. Verify file permissions:
+   - ~/.openclaw should be 700
+   - ~/.openclaw/openclaw.json should be 600
+   - All credential files should be 600
+   Fix any that have drifted.
+3. Check for security advisories or updates
+4. Log results in today's memory file
+5. Only message me if something critical is found
+
+Otherwise, complete silently.
+```
+
+## Cron Configuration
+
+- **Schedule:** `0 10 * * 1` (10:00 AM every Monday)
+- **Timeout:** 180 seconds
+
+## Key Permissions
+
+| Path | Permission | Why |
+|------|-----------|-----|
+| `~/.openclaw/` | 700 | Only owner can access |
+| `openclaw.json` | 600 | Contains API keys |
+| `credentials/` | 600 | Auth tokens |

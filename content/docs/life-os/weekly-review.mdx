@@ -1,0 +1,49 @@
+---
+title: Weekly Review
+description: Sunday review template for reflecting on the week and planning the next
+---
+
+## What It Does
+
+A cron job that adds a weekly review template to your Sunday journal. Covers wins, challenges, goal progress, budget, and next week's priorities.
+
+## Template
+
+```markdown
+## Weekly Review (Sunday PM)
+### Wins this week
+  -
+### What didn't work?
+  -
+### Goal progress
+  - Goal 1:
+  - Goal 2:
+  - Goal 3:
+### Budget check
+  - On track? Any adjustments?
+### Next week's focus
+  - Top 3 priorities:
+  - 1.
+  - 2.
+  - 3.
+### Training/health check
+  - Feeling recovered? Anything to adjust?
+### Ideas to explore
+  - Any new project ideas to advance?
+```
+
+## Setup Prompt (Cron Job)
+
+```
+Create a cron job called "Sunday Weekly Review" at 10:00 AM on
+Sundays. It should append the weekly review template to today's
+journal. Check if it already exists before adding. Send me a
+message when it's ready. Don't pre-fill any sections.
+```
+
+## Cron Configuration
+
+- **Schedule:** `0 10 * * 0` (10:00 AM every Sunday)
+- **Timezone:** Your local timezone
+- **Session:** Isolated
+- **Model:** Sonnet

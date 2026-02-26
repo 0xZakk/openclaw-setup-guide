@@ -1,0 +1,51 @@
+---
+title: Coding Agent
+description: Delegate coding tasks to Claude Code or Codex sub-agents
+---
+
+## What It Does
+
+Runs coding agents (Claude Code, Codex, etc.) as background sub-agents in PTY sessions. Your main agent acts as orchestrator -- it writes the spec, spawns the coding agent, monitors progress, and reports back.
+
+Good for:
+- Building new features or apps
+- Reviewing PRs (spawn in a temp directory)
+- Refactoring large codebases
+- Any iterative coding that needs file exploration
+
+## Setup Prompt
+
+```
+When I ask you to build something:
+
+1. Create a project folder in workspace/projects/
+2. Write a spec or PROMPT.md with clear requirements
+3. Spawn a Claude Code sub-agent in a PTY session to do the work
+4. Monitor progress and report back when done
+
+Rules:
+- Always use pty:true for coding agents (they need a terminal)
+- Use --full-auto for building (auto-approves changes)
+- Use background mode for longer tasks
+- Never start coding agents in the OpenClaw workspace directory
+- Keep me updated: message when starting, on milestones, on errors,
+  and when done
+```
+
+## Key Commands
+
+```bash
+# One-shot task
+claude -p "Your task" --allowedTools "Bash,Read,Write,Edit"
+
+# Background with monitoring
+claude "Your task"  # in PTY background session
+# Then monitor with process:log, process:poll
+```
+
+## Tips
+
+- **Spec quality matters** -- the better your spec, the better the output
+- **Use workdir** -- point the agent at the project directory so it stays focused
+- **Git init first** -- Codex requires a git repo
+- **Parallel is fine** -- run multiple agents on different tasks simultaneously

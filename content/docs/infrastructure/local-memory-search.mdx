@@ -1,0 +1,43 @@
+---
+title: Local Memory Search
+description: On-device semantic search for memory recall
+---
+
+## What It Does
+
+Uses a local embedding model to search your memory and workspace files semantically. When the agent needs to recall something, it searches locally -- no API calls, no latency, no cost.
+
+## Setup
+
+Download a GGUF embedding model (e.g., Qwen3-Embedding-4B) and configure:
+
+```json
+{
+  "agents": {
+    "defaults": {
+      "memorySearch": {
+        "provider": "local",
+        "local": {
+          "modelPath": "~/.openclaw/models/Qwen3-Embedding-4B-Q8_0.gguf"
+        },
+        "sync": {
+          "watch": true
+        }
+      }
+    }
+  }
+}
+```
+
+The `watch: true` setting keeps the index updated as files change.
+
+## Model Options
+
+Any GGUF embedding model works. Larger models give better results but use more RAM:
+
+- **Qwen3-Embedding-4B** (~4GB) -- good quality, reasonable size
+- Smaller models available for machines with less RAM
+
+## Fallback
+
+If you don't want to run a local model, you can use API-based search or set `fallback: "none"` to disable memory search entirely.

@@ -1,0 +1,49 @@
+---
+title: Monthly Review
+description: First-of-month review template for bigger-picture reflection
+---
+
+## What It Does
+
+A cron job that adds a monthly review template on the 1st of each month. Covers last month's summary, goal progress, keep/stop/start, project status, and next month's theme.
+
+## Template
+
+```markdown
+## Monthly Review (1st of month)
+### Last month summary
+  - Major accomplishments:
+  - Major challenges:
+### Goal progress
+  - Goal 1: Current state, next milestone
+  - Goal 2: Current state, next milestone
+  - Goal 3: Current state, next milestone
+### What to keep doing
+  -
+### What to stop doing
+  -
+### What to start doing
+  -
+### Projects status
+  - Active:
+  - On hold:
+  - To archive:
+### Next month's theme/focus
+  -
+```
+
+## Setup Prompt (Cron Job)
+
+```
+Create a cron job called "Monthly Review" at 7:00 AM on the 1st
+of each month. Append the monthly review template to today's
+journal. Check if it already exists. Send me a message when ready.
+Don't pre-fill any sections.
+```
+
+## Cron Configuration
+
+- **Schedule:** `0 7 1 * *` (7:00 AM on the 1st)
+- **Timezone:** Your local timezone
+- **Session:** Isolated
+- **Model:** Sonnet

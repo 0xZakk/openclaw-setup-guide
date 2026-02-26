@@ -1,0 +1,57 @@
+---
+title: QMD Local Search
+description: Semantic and keyword search across all your markdown files
+---
+
+## What It Does
+
+QMD is a local search engine for markdown files. It supports three search modes:
+
+- **BM25 keyword search** (`qmd search`) -- fast, no model needed
+- **Semantic vector search** (`qmd vsearch`) -- finds conceptually related content
+- **Hybrid search** (`qmd query`) -- combines both with reranking for best quality
+
+The agent uses it to find related notes for cross-linking, search memory, and answer questions about vault content.
+
+## Setup
+
+Install QMD:
+
+```bash
+bun install -g github:tobi/qmd
+```
+
+## Setup Prompt
+
+```
+Set up QMD collections for searching my files:
+
+1. A "workspace" collection pointing to the OpenClaw workspace directory
+2. A "memory" collection pointing to the memory subdirectory
+3. A "vault" collection pointing to my knowledge vault
+
+Run `qmd update` to index all files, then `qmd embed` to generate
+embeddings for semantic search.
+
+Commands reference:
+- qmd search "query" -- keyword search (fast)
+- qmd vsearch "query" -- semantic search (needs embeddings)
+- qmd query "query" -- hybrid search + reranking (best quality)
+- qmd update -- re-index after changes
+- qmd embed -- update embeddings after changes
+
+Set up a nightly cron job at 2 AM to run `qmd update && qmd embed`
+so the index stays fresh.
+```
+
+## Nightly Reindex Cron
+
+```
+Create a cron job called "Nightly QMD Reindex" at 2:00 AM every day.
+Run `qmd update` and `qmd embed` to reindex all collections. Log
+results in today's memory file. Only message me if there are errors.
+```
+
+## Models
+
+QMD downloads embedding models on first use (~329MB for embeddings, ~1.9GB for query expansion + reranking). The first `qmd query` or `qmd vsearch` will be slow while models download.

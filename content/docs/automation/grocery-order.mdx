@@ -1,0 +1,49 @@
+---
+title: Grocery Ordering
+description: Automated grocery cart building with diet profile and browser automation
+---
+
+## What It Does
+
+Maintains a diet/grocery profile and automates adding items to your grocery cart via browser automation. The agent knows your dietary preferences, staple items, and delivery schedule.
+
+Components:
+- **Grocery profile** -- your diet, staple items, preferences, delivery cadence
+- **Browser automation** -- searches for items and adds them to your cart
+- **Delivery cadence** -- e.g., Sunday main delivery + Wednesday top-up
+
+## Setup Prompt
+
+```
+Set up a grocery automation system:
+
+1. Create a grocery-profile.md with:
+   - My dietary preferences and restrictions
+   - Staple items I always need (with quantities)
+   - Items I buy weekly vs. monthly
+   - Preferred brands
+   - Delivery service (Whole Foods, Instacart, etc.)
+   - Delivery address
+   - Delivery cadence (e.g., Sunday + Wednesday)
+
+2. Set up browser automation to:
+   - Search for items on my grocery service
+   - Add items to cart
+   - Flag items that aren't available
+
+3. Create a weekly cadence:
+   - Sunday: full grocery order
+   - Wednesday: top-up (bananas, anything running low)
+
+4. ALWAYS get my approval before placing orders
+5. Flag items that route to the wrong cart or aren't available
+
+My diet: [describe your dietary preferences and staple items]
+```
+
+## Important Notes
+
+- Always get human approval before checkout
+- Some items may route to different carts (e.g., Amazon Fresh vs. Whole Foods) -- flag these
+- Browser automation requires a saved login session
+- Meat/specialty items may need to be sourced separately
