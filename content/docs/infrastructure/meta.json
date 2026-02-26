@@ -1,4 +1,4 @@
 {
   "title": "Infrastructure",
-  "pages": ["brave-search", "audio-transcription", "local-memory-search", "telegram-channel", "onepassword", "table-image", "update-check-cron", "qmd-reindex-cron", "security-audit-cron"]
+  "pages": ["brave-search", "audio-transcription", "local-memory-search", "telegram-channel", "onepassword", "table-image"]
 }

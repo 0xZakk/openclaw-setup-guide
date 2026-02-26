@@ -1,4 +1,4 @@
 {
   "title": "Foundation",
-  "pages": ["agent-identity", "memory-system", "user-profile", "para-organization", "voice-profile"]
+  "pages": ["agent-identity", "memory-system", "user-profile", "para-organization", "voice-profile", "update-check-cron", "qmd-reindex-cron", "security-audit-cron"]
 }
