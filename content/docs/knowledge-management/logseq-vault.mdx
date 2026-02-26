@@ -3,16 +3,32 @@ title: LogSeq/Obsidian Vault
 description: A personal knowledge base with atomic, interlinked notes
 ---
 
-This is a zettelkasten-style knowledge vault where every note is an atomic idea connected to other ideas via bidirectional links. Two types of notes:
+## How I Think About Knowledge Management
 
-- **Reference notes** -- one per source (book, article, paper). Summarizes the source, links out to individual insights.
-- **Literature notes** -- one per idea. A standalone concept written in your own words. Cross-linked to related notes and back to the source.
+I keep a zettelkasten-style vault in LogSeq. The basic idea: every note is a single atomic idea, written in my own words, connected to other ideas via bidirectional links. Over time the vault becomes a web of interconnected knowledge that gets more valuable the more you add to it, because new notes link to existing ones and create connections you wouldn't have made otherwise.
 
-The vault becomes a web of interconnected knowledge. It gets more valuable the more you add to it because new notes connect to existing ones. I've built mine up to 350+ literature notes across dozens of books and papers.
+I migrated everything over from Roam Research into LogSeq. The tool doesn't matter that much -- Obsidian works just as well, and the method is the same either way. Both are local-first markdown editors with bidirectional linking. I went with LogSeq.
 
-This works with either **LogSeq** or **Obsidian** -- both are local-first markdown editors with bidirectional linking. I use LogSeq. The method matters more than the tool.
+There are two types of notes:
 
-For syncing between machines, I use **Syncthing** (free, peer-to-peer) instead of iCloud or Dropbox. iCloud in particular causes file locking issues that will drive you crazy.
+- **Reference notes** -- one per source (book, article, paper, podcast). Summarizes the source, links out to individual insights, holds the metadata.
+- **Literature notes** -- one per idea. A standalone concept written in my own words, 2-3 paragraphs. Cross-linked to related notes and back to the source reference note.
+
+I've built mine up to 350+ literature notes across dozens of books and papers. The real value isn't any individual note -- it's the connections between them.
+
+## How OpenClaw Fits In
+
+This is where it gets interesting. My agent has direct read/write access to the vault (via [Syncthing](/foundation/syncthing-setup) if you're running on a separate machine). That means it can both read my existing notes for context and create new ones.
+
+Here's how I actually use it:
+
+**Research workflow** -- When I find a book, article, or paper worth processing, I send it to my agent. It reads the source, extracts 3-8 key insights, and creates a reference note plus individual literature notes for each insight. It cross-links everything to existing vault notes and logs what it created in the daily journal. A single paper turns into a handful of atomic notes that connect to the rest of my knowledge base.
+
+**Writing workflow** -- When I'm working on an article or a thread, I'll ask my agent to search the vault for relevant notes on a topic. It pulls together related literature notes and reference notes, which gives me a research foundation to write from. The [tweet pipeline](/content-creation/tweet-pipeline) also pulls from vault content.
+
+**Daily journals** -- The [Life OS](/life-os/overview) cron jobs write directly to LogSeq journal files. Morning writing logs, daily check-ins, weekly reviews -- they all live in the vault's journal folder and show up in LogSeq automatically.
+
+**Vault maintenance** -- Over time, notes accumulate and some get under-linked. My agent periodically runs cross-linking sweeps to find connections between notes that should be linked but aren't. See [Vault Maintenance](/knowledge-management/vault-maintenance).
 
 ## Setup Prompt
 
@@ -43,12 +59,20 @@ Format rules:
 - No subdirectories -- all pages in a flat folder
 ```
 
-## Syncthing Setup
+## Processing Sources
 
-If you want your agent to have direct access to the vault (highly recommended):
+When I send my agent something to process -- a paper, a set of Readwise highlights, an article -- it runs a two-pass pipeline:
 
-1. Install Syncthing on both machines
-2. Share the vault folder bidirectionally
-3. Set conflict resolution to "newest wins"
+**Pass 1 (Outline):** Read the source and outline 3-8 key insights worth capturing as literature notes. Each one is a full sentence expressing the core idea.
 
-This gives the agent real-time read/write access without cloud sync headaches.
+**Pass 2 (Write):** For each insight, write a standalone literature note (2-3 paragraphs, in my own words, with cross-links). Create the reference note linking to all of them.
+
+The two-pass approach matters. A single pass tends to produce surface-level notes. Outlining first and then writing forces deeper thinking about what's actually worth capturing.
+
+I use sub-agents for Pass 2 so the notes get written in parallel. Opus handles orchestration, Sonnet writes the individual notes. This keeps costs down -- processing a whole book's worth of highlights costs a few dollars instead of ten.
+
+## Syncthing
+
+If your agent runs on a different machine than your vault, you need [Syncthing](/foundation/syncthing-setup) to keep them in sync. My vault lives on my laptop where I use LogSeq, and Syncthing keeps it mirrored on the Mac Mini where my agent runs. Notes sync in both directions within seconds.
+
+If everything runs on the same machine, you don't need this -- just point your agent at the vault folder directly.
