@@ -13,12 +13,44 @@ Once you're past the onboarding flow and can message your agent, come back here.
 
 At this point you have a working agent, but it's a blank slate. It doesn't know who you are, it has no memory between sessions, and it's not doing anything proactively. This guide is about turning it into something actually useful.
 
-The first thing to do is give your agent an identity and teach it about you:
+Don't try to set everything up at once though. I built this over weeks. Here's how I'd do it if I were starting fresh.
+
+## Phase 1 -- Identity and Memory (Day 1)
+
+The foundation. Without these, your agent has no continuity between sessions and no idea who you are.
 
 1. **[Agent Identity](/foundation/agent-identity)** -- give it a name, personality, and operating instructions
 2. **[User Profile](/foundation/user-profile)** -- tell it who you are, your goals, how you work
 3. **[Memory System](/foundation/memory-system)** -- set up daily logs and long-term memory so it has continuity across sessions
 
-After that, the fastest way to start seeing daily value is setting up a [Morning Check-in](/life-os/morning-checkin) cron job. Your agent will add a planning template to your journal every morning -- it's a small thing but it makes the agent feel like it's actually showing up for you.
+About 30 minutes of prompting and iterating.
 
-From there, check the [Minimum Viable Setup](/minimum-viable-setup) for a phased plan to layer everything else on over a couple of weeks.
+## Phase 2 -- Life OS (Day 2)
+
+This is where you start getting daily value. Set up a couple cron jobs and your agent starts showing up for you every morning.
+
+- [PARA Organization](/foundation/para-organization) -- give the workspace some structure
+- [Morning Check-in](/life-os/morning-checkin) -- daily planning template
+- [Evening Check-in](/life-os/evening-checkin) -- daily reflection template
+- [Heartbeat System](/automation/heartbeat-system) -- proactive background check-ins
+
+About 20 minutes to set up. After this, your agent is doing something useful every day.
+
+## Phase 3 -- Knowledge Management (Week 1)
+
+This is where it gets really interesting.
+
+- [LogSeq/Obsidian Vault](/knowledge-management/logseq-vault) -- your personal knowledge base
+- [Zettelkasten Skill](/knowledge-management/zettelkasten-skill) -- process any source into atomic notes
+- [QMD Search](/knowledge-management/qmd-search) -- semantic search across everything
+
+About an hour for initial setup, then it grows as you feed it sources.
+
+## Phase 4 -- Content and Development (Week 2+)
+
+Power-user stuff. Each of these is independent -- pick what's relevant to you.
+
+- [Voice Profile](/foundation/voice-profile) -- capture your writing voice for ghostwriting
+- [Tweet Pipeline](/content-creation/tweet-pipeline) -- turn vault notes into tweets
+- [Coding Agent](/development/coding-agent) -- delegate coding to sub-agents
+- Infrastructure: [Brave Search](/infrastructure/brave-search), [Audio Transcription](/infrastructure/audio-transcription), [1Password](/infrastructure/onepassword)
