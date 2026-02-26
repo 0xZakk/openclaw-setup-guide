@@ -29,33 +29,17 @@ There are three ways to run things on a schedule with OpenClaw, and they each ha
 
 **Example: Running a backup script every night at 3 AM**
 
-Create a plist at `~/Library/LaunchAgents/com.user.nightly-backup.plist`:
+You don't need to hand-edit plist files yourself. Just tell your agent what you want:
 
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
-  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-<dict>
-  <key>Label</key>
-  <string>com.user.nightly-backup</string>
-  <key>ProgramArguments</key>
-  <array>
-    <string>/bin/bash</string>
-    <string>/Users/you/scripts/backup.sh</string>
-  </array>
-  <key>StartCalendarInterval</key>
-  <dict>
-    <key>Hour</key>
-    <integer>3</integer>
-    <key>Minute</key>
-    <integer>0</integer>
-  </dict>
-</dict>
-</plist>
+```
+Hey, I have a backup script at ~/scripts/backup.sh. Can you set up
+a launchd service to run it every night at 3 AM? Make sure it starts
+on boot and logs output somewhere I can check.
 ```
 
-Then load it: `launchctl load ~/Library/LaunchAgents/com.user.nightly-backup.plist`
+Your agent will create the plist file, put it in `~/Library/LaunchAgents/`, load it with `launchctl`, and confirm it's running. If you need to change the schedule later, just ask -- "change that backup to run at 4 AM instead" and the agent updates the plist and reloads it.
+
+The whole point of having an agent with shell access is that you don't need to remember plist XML syntax. Describe what you want, let the agent handle the implementation.
 
 **Limitation:** launchd just runs commands. If you need the agent to think, reason, write notes, or send you a message based on context, you need one of the other two options.
 
