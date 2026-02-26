@@ -64,10 +64,21 @@ The big ones to never commit:
 
 ## Setup
 
+> **Warning:** Fill in your `.gitignore` before staging or committing anything. If you commit first and add the `.gitignore` later, your API keys, bot tokens, and credentials will already be in the git history -- and removing them after the fact is a pain.
+
 ```bash
 cd ~/.openclaw
 git init
-# Create .gitignore with the contents above
+
+# FIRST: create and fill in .gitignore with everything from the
+# template above. Don't skip this step.
+nano .gitignore   # or whatever editor you prefer
+
+# Verify that sensitive files are ignored
+git status
+# openclaw.json, credentials/, models/, browser/ should NOT appear
+
+# Now it's safe to stage and commit
 git add .gitignore
 git add -A
 git commit -m "Initial commit"
