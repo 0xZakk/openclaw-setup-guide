@@ -19,6 +19,25 @@ QMD works with collections -- groups of markdown files from different directorie
 
 That's around 8,800 files total with ~38,000 embedded vectors.
 
+## Setting Up Collections
+
+QMD doesn't automatically know what to index -- you tell it by creating collections. Each collection points to a directory and a file pattern. You can ask your agent to set these up:
+
+```
+Install QMD (bun install -g github:tobi/qmd) and set up three
+collections:
+
+1. "workspace" pointing to ~/.openclaw/workspace/ for all .md files
+2. "memory" pointing to ~/.openclaw/workspace/memory/ for all .md files
+3. "slipbox" pointing to ~/slipbox/ for all .md files
+
+Then run qmd update and qmd embed to do the initial indexing.
+```
+
+Under the hood, the agent runs `qmd collection add <path> --name <name> --mask "**/*.md"` for each one. After that, `qmd update` and `qmd embed` know which directories to scan. You only need to set up collections once -- the nightly cron job just refreshes them.
+
+If you want to add more collections later (say, a projects folder or a second vault), just ask your agent to add another collection and it'll be included in the nightly reindex automatically.
+
 ## Why Reindex Nightly
 
 New files get created constantly -- journal entries, memory logs, vault notes, project docs. If you don't reindex, QMD's search results go stale. The nightly job runs `qmd update` to scan for new and changed files, then `qmd embed` to generate embeddings for anything new. This way when you ask your agent to search for something the next morning, it can find last night's notes.
