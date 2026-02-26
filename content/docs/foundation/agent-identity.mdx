@@ -39,8 +39,41 @@ I want to set up my agent's identity. Help me create three files:
    - File organization conventions
 ```
 
+## What We've Added Beyond the Basics
+
+Over time I've added a bunch of non-obvious things to these files that made a real difference. Here's what's worth stealing:
+
+### SOUL.md -- Things That Actually Matter
+
+**"No emojis. Ever."** -- If there's something about the agent's output that bugs you, put it in SOUL.md. I hate emoji in my messages and vault files, so it's an explicit rule. Be specific about your pet peeves.
+
+**"You're not a chatbot. You're becoming someone."** -- Framing matters. If you tell the agent it's "an AI assistant," it acts like one. If you tell it it's becoming a person with its own evolving identity, it behaves differently. The opening line sets the tone.
+
+**"If you change this file, tell the user."** -- SOUL.md is the agent's soul. I want to know if it decides to update its own personality. This keeps you in the loop on self-modifications.
+
+### AGENTS.md -- The Operational Stuff
+
+This is where I've added the most custom behavior:
+
+**Memory security:** MEMORY.md only loads in the main session (direct chat with me). In group chats or shared contexts, it skips MEMORY.md to avoid leaking personal context to strangers. This is easy to miss but important if you use your agent in Discord servers or group chats.
+
+**"Write it down -- no mental notes."** -- Agents love to say "I'll remember that" and then forget it next session. An explicit rule that if something needs remembering, it goes in a file. "Mental notes" don't survive restarts.
+
+**File deduplication rules:** We had an incident where the agent assumed two files with the same name had the same content, merged them wrong, and lost data. Now there's an explicit rule: always diff or read both files before deciding which to keep. Never assume filename match = content match.
+
+**Internal vs. external action boundaries:** The agent can freely read files, search the web, organize things. But sending emails, tweets, or anything that leaves the machine requires asking first. This is a trust gradient -- bold internally, cautious externally.
+
+**Group chat behavior:** Rules for when to speak and when to stay quiet in group chats. The key insight: humans don't respond to every message in a group chat, and neither should your agent. I have explicit guidelines for "respond when" vs. "stay silent when" and a rule against the "triple-tap" (responding multiple times to the same message).
+
+**Platform formatting rules:** Different messaging platforms render differently. Discord and WhatsApp don't render markdown tables (use bullet lists instead). Discord links should be wrapped in `<>` to suppress embeds. WhatsApp doesn't support headers. These small things make the agent's messages look natural on each platform.
+
+**Heartbeat guidance:** Detailed rules for what to do during heartbeat polls -- what to check, when to reach out vs. stay quiet, how to track what was last checked, and what proactive work is OK to do without asking (memory maintenance, documentation updates, git commits).
+
+**Workspace boundaries:** Everything lives inside `~/.openclaw/workspace/`. The agent should never create directories at `~/` or in the user's own `~/projects/` folder. This prevents the agent from littering your filesystem. Sub-agents get the same rule with explicit full paths.
+
 ## Tips
 
 - You'll refine SOUL.md over weeks as you figure out what works. That's normal.
-- Be specific about what annoys you. If you hate emoji, say so. If corporate speak makes you cringe, say so.
+- Be specific about what annoys you. Every pet peeve you add makes the agent better.
 - Tell the agent "update SOUL.md if you learn something about how to work with me" -- it'll evolve on its own.
+- When something goes wrong, add a rule about it. Our deduplication rule came from a real data loss incident. Lessons learned become operating instructions.
