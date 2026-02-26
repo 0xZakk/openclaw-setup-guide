@@ -1,0 +1,129 @@
+---
+title: Git Version Control
+description: Keep your agent's config and workspace in a Git repository
+---
+
+Your agent's identity files, memory, skills, cron jobs, and workspace should all be in a Git repository. This gives you version history (so you can roll back if something breaks), backup to GitHub, and the ability to sync or restore your setup on a new machine.
+
+The way I have it set up: the entire `~/.openclaw/` directory is a Git repo. The workspace, skills, cron jobs, and config all live inside it. A carefully crafted `.gitignore` keeps secrets and ephemeral data out of the repo.
+
+## What Gets Committed
+
+- **Workspace files** -- AGENTS.md, SOUL.md, USER.md, IDENTITY.md, MEMORY.md, TOOLS.md, VOICE.md, HEARTBEAT.md
+- **Memory files** -- `memory/YYYY-MM-DD.md` (your agent's daily logs and long-term memory)
+- **Custom skills** -- anything in `skills/` (SKILL.md files, reference docs, scripts)
+- **Cron jobs** -- `cron/jobs.json` and run history
+- **Projects** -- everything in `workspace/projects/`
+- **Scripts and resources** -- utility scripts, reference material
+
+## What Gets Excluded
+
+This is the critical part. Your `.gitignore` needs to exclude anything sensitive or ephemeral:
+
+```gitignore
+# Secrets and credentials -- NEVER commit these
+openclaw.json          # Contains API keys, bot tokens
+openclaw.json.bak
+identity/
+credentials/
+agents/*/agent/auth-profiles.json
+
+# Session data -- large, ephemeral, contains full conversations
+agents/*/sessions/
+
+# Runtime and ephemeral
+logs/
+telegram/
+update-check.json
+*.lock
+
+# Large binary files
+models/              # Embedding models (multi-GB)
+browser/             # Browser profiles with saved sessions
+media/               # Inbound/outbound media files
+
+# Backup files
+*.bak
+*.bak.*
+
+# Nested git repos (workspace projects have their own repos)
+workspace/.git/
+workspace/projects/*/.git/
+
+# OS files
+.DS_Store
+```
+
+The big ones to never commit:
+
+- **`openclaw.json`** -- this has your Anthropic API key, Telegram bot token, and any other secrets. Committing this to a public repo would be very bad.
+- **`credentials/`** -- auth tokens and similar
+- **`browser/`** -- saved browser profiles may contain logged-in sessions (Amazon, etc.)
+- **`models/`** -- multi-gigabyte embedding model files that don't belong in git
+
+## Setup
+
+```bash
+cd ~/.openclaw
+git init
+# Create .gitignore with the contents above
+git add .gitignore
+git add -A
+git commit -m "Initial commit"
+
+# Create a PRIVATE repo on GitHub
+gh repo create your-username/openclaw-config --private --source . --push
+```
+
+**Make the repo private.** Even with a good .gitignore, your memory files, personality profile, and workspace contain personal information you probably don't want public.
+
+## Ongoing
+
+I have my agent commit and push periodically as part of its normal workflow. You can also add it to heartbeat tasks or do it manually:
+
+```bash
+cd ~/.openclaw
+git add -A
+git commit -m "Update memory and workspace"
+git push
+```
+
+## Setup Prompt
+
+```
+Set up git version control for the OpenClaw directory at ~/.openclaw.
+Initialize a git repo if one doesn't exist. Create a .gitignore that
+excludes:
+- openclaw.json and any backup copies (contains API keys)
+- credentials/ and identity/ directories
+- auth-profiles.json files
+- session data (agents/*/sessions/)
+- logs, telegram data, lock files
+- models/ (multi-GB binary files)
+- browser/ (contains saved login sessions)
+- media/ (inbound/outbound files)
+- .bak files
+- .DS_Store
+
+Create a private GitHub repo and push the initial commit.
+
+Periodically commit and push changes as part of your workflow --
+especially after memory updates, skill changes, or config tweaks.
+
+IMPORTANT: Double-check that openclaw.json is NOT tracked before
+pushing. Run `git status` and verify it's listed as ignored.
+```
+
+## Restoring on a New Machine
+
+If you need to set up on a new machine:
+
+```bash
+git clone git@github.com:your-username/openclaw-config.git ~/.openclaw
+# Then manually create openclaw.json with your API keys
+# Install OpenClaw: npm install -g openclaw
+# Download your embedding model to models/
+# Start the gateway: openclaw gateway start
+```
+
+Your agent's entire identity, memory, skills, and workspace restore instantly. The only things you need to recreate manually are the secrets (API keys, bot tokens) and large binary files (models).
