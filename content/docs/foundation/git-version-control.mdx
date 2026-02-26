@@ -13,7 +13,6 @@ The way I have it set up: the entire `~/.openclaw/` directory is a Git repo. The
 - **Memory files** -- `memory/YYYY-MM-DD.md` (your agent's daily logs and long-term memory)
 - **Custom skills** -- anything in `skills/` (SKILL.md files, reference docs, scripts)
 - **Cron jobs** -- `cron/jobs.json` and run history
-- **Projects** -- everything in `workspace/projects/`
 - **Scripts and resources** -- utility scripts, reference material
 
 ## What Gets Excluded
@@ -46,9 +45,11 @@ media/               # Inbound/outbound media files
 *.bak
 *.bak.*
 
-# Nested git repos (workspace projects have their own repos)
+# Nested git repos
 workspace/.git/
-workspace/projects/*/.git/
+
+# Projects directory -- each project is its own git repo
+workspace/projects/
 
 # OS files
 .DS_Store
@@ -103,6 +104,7 @@ excludes:
 - browser/ (contains saved login sessions)
 - media/ (inbound/outbound files)
 - .bak files
+- workspace/projects/ (each project is its own git repo)
 - .DS_Store
 
 Create a private GitHub repo and push the initial commit.
