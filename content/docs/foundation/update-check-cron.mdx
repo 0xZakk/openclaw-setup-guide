@@ -3,7 +3,7 @@ title: Nightly Update Check
 description: Check for OpenClaw updates and notify (never auto-install)
 ---
 
-A nightly cron job that checks if a newer version of OpenClaw is available. If there is one, it messages me. It never auto-installs -- I learned the hard way that `npm install -g` removes the old package before installing the new one, so a failed install can leave you with no OpenClaw at all.
+A nightly cron job that checks if a newer version of OpenClaw is available and messages me if there is one. The job itself never auto-installs -- it just checks and notifies. When I'm ready to update, I tell my agent to go ahead and it handles the rest.
 
 ## Setup Prompt (Cron Job)
 
@@ -24,3 +24,13 @@ This is check-and-notify only. I'll update manually when ready.
 
 - **Schedule:** `0 3 * * *` (3:00 AM daily)
 - **Timeout:** 60 seconds
+
+## Actually Installing Updates
+
+When you get the notification and you're ready to update, just tell your agent:
+
+```
+Go ahead and update OpenClaw to the latest version.
+```
+
+Your agent has a built-in `gateway update.run` tool that handles the whole process -- it pulls the update, restarts the gateway, and pings you when it's back online. You don't need to SSH in or run anything manually. The reason the cron job doesn't do this automatically is that updates restart the gateway, and you probably want to be around for that in case something goes wrong.
