@@ -1,29 +1,24 @@
 ---
-title: Quick Start
-description: Get OpenClaw up and running with the essentials
+title: Getting Started
+description: What to do after you've installed OpenClaw
 ---
 
 ## Prerequisites
 
-- OpenClaw installed (`npm install -g openclaw`)
-- A messaging channel connected (Telegram, Discord, Signal, etc.)
-- An Anthropic API key
-- A machine that stays on (Mac, Linux server, Raspberry Pi -- whatever you've got)
+This guide assumes you already have OpenClaw installed, connected to a messaging channel, and running. If you haven't done that yet, check the [OpenClaw documentation](https://docs.openclaw.ai) to get set up first.
 
-## First Steps
+Once you're past the onboarding flow and can message your agent, come back here.
 
-Once OpenClaw is installed and connected to your messaging channel, the first thing to do is give your agent an identity and teach it about you. This is what makes it *yours* instead of a generic chatbot.
+## What's Next
 
-1. **Run the onboarding wizard:** `openclaw onboard`
-2. **Set up your workspace files** -- [Agent Identity](/foundation/agent-identity), [User Profile](/foundation/user-profile), and [Memory System](/foundation/memory-system)
-3. **Add your first cron job** -- I'd start with a [Morning Check-in](/life-os/morning-checkin). You'll see daily value immediately.
-4. **Layer on from there** -- check the [Minimum Viable Setup](/getting-started/minimum-viable-setup) for a phased rollout
+At this point you have a working agent, but it's a blank slate. It doesn't know who you are, it has no memory between sessions, and it's not doing anything proactively. This guide is about turning it into something actually useful.
 
-## How This Guide Works
+The first thing to do is give your agent an identity and teach it about you:
 
-Each page covers one piece of the system:
-- A description of what it does and why I set it up
-- A **setup prompt** you can paste into your agent's chat to get it going
-- Any config changes or external tools you'll need
+1. **[Agent Identity](/foundation/agent-identity)** -- give it a name, personality, and operating instructions
+2. **[User Profile](/foundation/user-profile)** -- tell it who you are, your goals, how you work
+3. **[Memory System](/foundation/memory-system)** -- set up daily logs and long-term memory so it has continuity across sessions
 
-Everything here is a starting point. Adapt it to how you actually work.
+After that, the fastest way to start seeing daily value is setting up a [Morning Check-in](/life-os/morning-checkin) cron job. Your agent will add a planning template to your journal every morning -- it's a small thing but it makes the agent feel like it's actually showing up for you.
+
+From there, check the [Minimum Viable Setup](/getting-started/minimum-viable-setup) for a phased plan to layer everything else on over a couple of weeks.
