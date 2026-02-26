@@ -1,0 +1,160 @@
+---
+title: Scheduling and Automation
+description: When to use launchd, OpenClaw cron, and heartbeats for automated tasks
+---
+
+There are three ways to run things on a schedule with OpenClaw, and they each have a different purpose. The right choice depends on whether you need the AI agent involved at all.
+
+## 1. macOS launchd (Best Option When Possible)
+
+`launchd` is Apple's built-in service manager. It runs processes on a schedule, restarts them if they crash, and starts them at boot. It has nothing to do with AI -- it's just the Mac's native way to run background tasks.
+
+**Why it's the best option:** Zero token usage. It doesn't invoke the agent at all -- it just runs a command. It's also the most reliable option because it's built into the OS and survives reboots.
+
+**How we use it:** OpenClaw itself runs as a launchd service. The gateway process that powers everything is managed by a `.plist` file at `~/Library/LaunchAgents/ai.openclaw.gateway.plist`. This means OpenClaw starts automatically when the Mac boots, restarts if it crashes, and runs 24/7 without any manual intervention.
+
+```xml
+<!-- Key parts of the plist -->
+<key>RunAtLoad</key>
+<true/>           <!-- Start when the Mac boots -->
+<key>KeepAlive</key>
+<true/>           <!-- Restart if it crashes -->
+```
+
+**When to use launchd:**
+- Running OpenClaw itself (the gateway process)
+- Any script that doesn't need AI intelligence -- just needs to run on a schedule
+- Shell scripts for backups, file syncing, log rotation
+- Anything where you want zero token cost and maximum reliability
+
+**Example: Running a backup script every night at 3 AM**
+
+Create a plist at `~/Library/LaunchAgents/com.user.nightly-backup.plist`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN"
+  "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.user.nightly-backup</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/you/scripts/backup.sh</string>
+  </array>
+  <key>StartCalendarInterval</key>
+  <dict>
+    <key>Hour</key>
+    <integer>3</integer>
+    <key>Minute</key>
+    <integer>0</integer>
+  </dict>
+</dict>
+</plist>
+```
+
+Then load it: `launchctl load ~/Library/LaunchAgents/com.user.nightly-backup.plist`
+
+**Limitation:** launchd just runs commands. If you need the agent to think, reason, write notes, or send you a message based on context, you need one of the other two options.
+
+## 2. OpenClaw Cron Jobs (Precise AI Tasks)
+
+OpenClaw's built-in cron system runs agent tasks at precise times. Each job spawns an isolated sub-agent session, runs the task, and optionally announces the result back to you on Telegram (or whatever channel you use).
+
+**Why use it:** When you need the AI agent to do something at a specific time -- write a journal template, check for updates, run a security audit, process data. Each job is isolated from your main conversation, can use a different (cheaper) model, and runs with its own timeout.
+
+**How we use it:** This is the workhorse of our Life OS. All the daily check-ins, weekly reviews, nightly maintenance -- they're all cron jobs.
+
+| Job | Schedule | What It Does |
+|-----|----------|--------------|
+| Morning Writing Log | 5:00 AM daily | Scans vault for active drafts, adds list to journal |
+| Morning Check-in | 8:00 AM daily | Adds planning template to journal |
+| Evening Check-in | 4:00 PM daily | Adds reflection template to journal |
+| Nightly QMD Reindex | 2:00 AM daily | Re-indexes search collections |
+| Nightly Update Check | 3:00 AM daily | Checks for OpenClaw updates |
+| Sunday Weekly Review | 10:00 AM Sundays | Adds weekly review template |
+| Monthly Review | 7:00 AM on the 1st | Adds monthly review template |
+| Weekly Security Audit | 10:00 AM Mondays | Checks permissions and security |
+
+**When to use cron:**
+- Exact timing matters ("9:00 AM sharp every Monday")
+- The task needs AI reasoning (reading files, writing notes, making decisions)
+- The task should be isolated from your main conversation
+- You want to use a cheaper model for simple tasks (e.g., Sonnet for journal templates)
+- One-shot reminders ("remind me in 20 minutes")
+- Tasks that should deliver results directly to a channel
+
+**Example: Creating a cron job**
+
+```
+Create a cron job called "Daily Morning Check-in" that runs at
+8:00 AM America/Chicago every day. Use Sonnet. Timeout 180 seconds.
+Append a morning planning template to today's journal, then send
+me a Telegram message when it's ready.
+```
+
+**Cost note:** Every cron job uses tokens because it's running an agent turn. Using Sonnet instead of Opus for simple tasks (like adding a journal template) keeps costs down. Our journal template jobs cost fractions of a cent each.
+
+## 3. OpenClaw Heartbeat (Batched Background Awareness)
+
+Heartbeats are periodic polls that run in your **main session** (not isolated). Every 30 minutes (configurable), OpenClaw nudges the agent with a prompt. The agent reads `HEARTBEAT.md`, does whatever tasks are listed, and either surfaces something important or replies `HEARTBEAT_OK` (which gets silently dropped).
+
+**Why use it:** When you want the agent to periodically check on things and only bother you if something needs attention. The key advantage is batching -- one heartbeat can check your email, calendar, weather, and notifications in a single agent turn, instead of running four separate cron jobs.
+
+**How we use it:** We keep HEARTBEAT.md mostly empty right now and use cron for the heavy lifting. But heartbeats are great for lightweight monitoring that doesn't need precise timing.
+
+**When to use heartbeat:**
+- Multiple checks can batch together (inbox + calendar + notifications in one turn)
+- You need conversational context from recent messages
+- Timing can drift slightly (every ~30 min is fine, not exact)
+- You want to reduce API calls by combining periodic checks
+- The agent should only reach out if something needs attention
+
+**Example: HEARTBEAT.md**
+
+```markdown
+# Heartbeat checklist
+- Check email for urgent messages
+- Check calendar for events in next 2 hours
+- If idle for 8+ hours, send a brief check-in
+```
+
+**Cost note:** Heartbeats run in the main session, which means they add to your main conversation's token usage. If HEARTBEAT.md is empty, the agent just replies `HEARTBEAT_OK` and the cost is minimal. But complex checklists with tool calls (checking email, calendar, etc.) will use more tokens per heartbeat.
+
+## Decision Framework
+
+```
+Does the task need AI at all?
+  NO  -> Use launchd (zero tokens, most reliable)
+  YES -> Continue...
+
+Does it need to run at an EXACT time?
+  YES -> Use OpenClaw cron
+  NO  -> Continue...
+
+Can it batch with other periodic checks?
+  YES -> Use heartbeat (add to HEARTBEAT.md)
+  NO  -> Use OpenClaw cron
+
+Is it a one-shot reminder?
+  YES -> Use cron with an "at" schedule
+  NO  -> Continue...
+
+Does it need a different model or session isolation?
+  YES -> Use cron (isolated)
+  NO  -> Use heartbeat
+```
+
+## The Efficient Setup
+
+Use all three together:
+
+1. **launchd** runs OpenClaw itself (and any non-AI scripts)
+2. **Cron jobs** handle precise AI tasks -- journal templates, maintenance, reviews
+3. **Heartbeat** handles lightweight periodic monitoring -- inbox, calendar, notifications
+
+This way you're not burning tokens on tasks that don't need AI, you get precise timing for the tasks that do, and you batch the monitoring stuff into efficient heartbeat turns.
+
+For more detail on the OpenClaw-specific options, see the [OpenClaw Cron documentation](https://docs.openclaw.ai/automation/cron-jobs) and [Heartbeat documentation](https://docs.openclaw.ai/gateway/heartbeat).
