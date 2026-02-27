@@ -15,7 +15,7 @@ Giving your agent access to email and calendar is one of the riskier things in t
 
 ## What We Use
 
-[gog](https://gogcli.sh) is a CLI for Google Workspace -- Gmail, Calendar, Drive, Contacts, Sheets, Docs, the whole suite. It's built by the same developer behind OpenClaw. It authenticates via OAuth and stores tokens locally. Your agent runs gog commands to check email, create calendar events, read your schedule, etc.
+[gog](https://gogcli.sh) ([GitHub](https://github.com/steipete/gogcli)) is a CLI for Google Workspace -- Gmail, Calendar, Drive, Contacts, Sheets, Docs, the whole suite. It authenticates via OAuth and stores tokens locally. Your agent runs gog commands to check email, create calendar events, read your schedule, etc.
 
 I mostly use it for:
 - Checking if I have urgent emails during heartbeats
@@ -27,7 +27,7 @@ I mostly use it for:
 The easiest way to install gog is through the OpenClaw onboarding process -- it'll offer to set it up as part of the initial configuration. If you need to install it separately:
 
 ```bash
-brew install gogcli
+brew install steipete/tap/gogcli
 ```
 
 Then authenticate:
