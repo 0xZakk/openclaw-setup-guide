@@ -1,0 +1,83 @@
+---
+title: Email and Calendar (Draft)
+description: Give your agent access to Gmail and Google Calendar via gog CLI
+---
+
+import { Callout } from 'fumadocs-ui/components/callout';
+
+<Callout type="warn">
+This page is a draft. The setup works but I'm still figuring out the right boundaries for how much email/calendar access the agent should have.
+</Callout>
+
+<Callout type="error">
+Giving your agent access to email and calendar is one of the riskier things in this guide. Your agent can read, send, and delete emails. It can create, modify, and delete calendar events. Think carefully about what you're comfortable with before setting this up. I'd recommend starting read-only (checking for emails, reading calendar) and expanding from there as you build trust.
+</Callout>
+
+## What We Use
+
+[gog](https://github.com/tobi/gog) is a CLI for Google Workspace -- Gmail, Calendar, Drive, Contacts, Sheets, Docs, the whole suite. It authenticates via OAuth and stores tokens locally. Your agent runs gog commands to check email, create calendar events, read your schedule, etc.
+
+I mostly use it for:
+- Checking if I have urgent emails during heartbeats
+- Adding events to my calendar (flights, meetings, reminders)
+- Checking my schedule for the day during morning check-ins
+
+## Setup
+
+Install gog:
+
+```bash
+go install github.com/tobi/gog@latest
+```
+
+Then authenticate:
+
+```bash
+gog auth login --account your.email@gmail.com
+```
+
+This opens a browser for Google OAuth. You'll authorize the app and gog stores the refresh token locally.
+
+## The Token Expiration Problem
+
+If you set this up and your token keeps expiring every 7 days, it's because your Google Cloud project is in "Testing" mode. Google intentionally expires refresh tokens after 7 days for apps in testing. This is annoying if your agent runs 24/7 and you don't want to re-auth every week.
+
+The fix is to publish your app in the Google Cloud Console:
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Navigate to **APIs & Services** > **OAuth consent screen**
+3. Find **Publishing status** -- it'll say "Testing"
+4. Click **Publish App** to switch to "In production"
+
+You don't need to go through Google's full app verification process. This is a personal app that only you use -- Google just needs the publishing status flipped so it stops expiring your tokens. Once it's in production, re-auth one more time:
+
+```bash
+gog auth login --account your.email@gmail.com
+```
+
+After that the refresh token should stay valid indefinitely.
+
+## Setup Prompt
+
+```
+I've installed gog and authenticated with my Google account.
+Use gog for email and calendar access.
+
+For now, keep it read-mostly:
+- Check email for urgent/important messages during heartbeats
+- Read my calendar to know what's coming up
+- Create calendar events when I ask you to
+- NEVER send emails without my explicit approval
+- NEVER delete or modify existing calendar events without asking
+
+My account: [your email]
+```
+
+## What I'd Like to Add Eventually
+
+- Automated email triage (flag important, archive noise)
+- Morning briefing that includes calendar + email summary
+- Auto-declining meetings that conflict with deep work blocks
+- Sending emails on my behalf (with approval flow)
+
+For now it's mostly read access plus creating calendar events when I ask. The email side especially needs more guardrails before I'd trust it to act autonomously.
